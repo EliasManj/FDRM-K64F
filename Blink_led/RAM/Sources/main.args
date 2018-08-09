@@ -1,0 +1,19 @@
+-mcpu=cortex-m4
+-mthumb
+-mfloat-abi=hard
+-mfpu=fpv4-sp-d16
+-g3
+-gdwarf-2
+-gstrict-dwarf
+-I"C:/Users/Elias g/FDRM-K64F/Blink_led/Project_Headers"
+-I"C:/Users/Elias g/FDRM-K64F/Blink_led/Project_Settings/Startup_Code"
+-I"C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/EWL_C/include"
+-I"C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/EWL_Runtime/include"
+-O0
+-ffunction-sections
+-fdata-sections
+-Wall
+-c
+-fmessage-length=0
+-D__VFPV4__
+-specs=ewl_c.specs
