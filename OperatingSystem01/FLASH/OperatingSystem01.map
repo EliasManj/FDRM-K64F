@@ -65,6 +65,34 @@ Discarded input sections
  .comment       0x00000000       0x7a ./Sources/User.o
  .ARM.attributes
                 0x00000000       0x3b ./Sources/User.o
+ .text          0x00000000        0x0 ./Sources/Queue.o
+ .data          0x00000000        0x0 ./Sources/Queue.o
+ .bss           0x00000000        0x0 ./Sources/Queue.o
+ .text.Queue_Add
+                0x00000000       0x3c ./Sources/Queue.o
+ .text.Queue_Next
+                0x00000000       0x5c ./Sources/Queue.o
+ .text.Queue_Pt_Inc
+                0x00000000       0x38 ./Sources/Queue.o
+ .text.TaskList_Empty
+                0x00000000       0x2c ./Sources/Queue.o
+ .text.TaskList_Full
+                0x00000000       0x30 ./Sources/Queue.o
+ .text.TaskList_TaskNumber
+                0x00000000       0x28 ./Sources/Queue.o
+ .debug_info    0x00000000      0x292 ./Sources/Queue.o
+ .debug_abbrev  0x00000000       0xf6 ./Sources/Queue.o
+ .debug_loc     0x00000000      0x15c ./Sources/Queue.o
+ .debug_aranges
+                0x00000000       0x48 ./Sources/Queue.o
+ .debug_macinfo
+                0x00000000    0x61cf7 ./Sources/Queue.o
+ .debug_line    0x00000000      0x243 ./Sources/Queue.o
+ .debug_str     0x00000000      0x1fd ./Sources/Queue.o
+ .comment       0x00000000       0x7a ./Sources/Queue.o
+ .ARM.attributes
+                0x00000000       0x3b ./Sources/Queue.o
+ .debug_frame   0x00000000       0xc4 ./Sources/Queue.o
  .text          0x00000000        0x0 ./Sources/OperativeSystem.o
  .data          0x00000000        0x0 ./Sources/OperativeSystem.o
  .bss           0x00000000        0x0 ./Sources/OperativeSystem.o
@@ -161,6 +189,7 @@ LOAD ./Project_Settings/Startup_Code/__arm_start.o
 LOAD ./Project_Settings/Startup_Code/__arm_end.o
 LOAD ./Sources/main.o
 LOAD ./Sources/User.o
+LOAD ./Sources/Queue.o
 LOAD ./Sources/OperativeSystem.o
                 0x00000d0c                __pformatter = __pformatter_
                 [0x00001104]                __sformatter = __sformatter
@@ -649,7 +678,7 @@ OUTPUT(OperatingSystem01.elf elf32-littlearm)
  .debug_aranges
                 0x00000328       0x30 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\librt.a(ROMCopy.o)
 
-.debug_macinfo  0x00000000   0x12cb5c
+.debug_macinfo  0x00000000   0x12cbac
  .debug_macinfo
                 0x00000000    0x61d23 ./Project_Settings/Startup_Code/kinetis_sysinit.o
  .debug_macinfo
@@ -657,9 +686,9 @@ OUTPUT(OperatingSystem01.elf elf32-littlearm)
  .debug_macinfo
                 0x00065c64     0x352a ./Project_Settings/Startup_Code/__arm_end.o
  .debug_macinfo
-                0x0006918e    0x61ce7 ./Sources/main.o
+                0x0006918e    0x61d0f ./Sources/main.o
  .debug_macinfo
-                0x000cae75    0x61ce7 ./Sources/OperativeSystem.o
+                0x000cae9d    0x61d0f ./Sources/OperativeSystem.o
 
 .debug_line     0x00000000     0x19c5
  .debug_line    0x00000000      0x21c ./Project_Settings/Startup_Code/kinetis_sysinit.o
