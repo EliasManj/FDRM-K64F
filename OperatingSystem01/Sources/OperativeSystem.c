@@ -7,9 +7,12 @@
 #include "derivative.h"
 #include "User.h"
 #include "OperativeSystem.h"
+#include "Queue.h"
 
 TASK first;
-TASK ready_arr[3];
+TASK ready_arr[20];
+
+QueueType readyQueue = { 0, 0, STATIC_ALLOC, { } };
 
 void ActivateTask(TASK task){
 	
@@ -30,9 +33,9 @@ void OS_init(volatile TASK *tasks, int size){
 	int i;
 	for(i=0;i<size;i++){
 		if(tasks[i].autostart == 1){
-			tasks[i].state = 1; //si tiene autostart la tarea se va a ready
+			tasks[i].state = READY; //si tiene autostart la tarea se va a ready
 		}	
-		if(tasks[i].state == 1){
+		if(tasks[i].state == READY){
 			ready_arr[count] = tasks[i];
 			count++;
 		} 

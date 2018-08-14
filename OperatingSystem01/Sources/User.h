@@ -9,9 +9,9 @@
 #ifndef USER_H_
 #define USER_H_
 #define IDLE 0
-#define READY 2
-#define RUNNING 3
-#define WAIT 4
+#define READY 1
+#define RUNNING 2
+#define WAIT 3
 
 typedef struct {
     volatile uint8_t priority;

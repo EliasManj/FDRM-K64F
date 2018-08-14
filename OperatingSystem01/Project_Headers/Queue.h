@@ -8,13 +8,13 @@
 #ifndef QUEUE_H_
 #define QUEUE_H_
 
-#define MAXNODES 20
+#define STATIC_ALLOC 20
 
 struct Queue {
 	volatile uint8_t head;
 	volatile uint8_t tail;
 	volatile uint8_t size;
-	volatile TASK tasklist[MAXNODES];
+	volatile TASK tasklist[STATIC_ALLOC];
 };
 
 typedef struct Queue QueueType;
