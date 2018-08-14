@@ -7,36 +7,43 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS_QUOTED += \
 "../Sources/OperativeSystem.c" \
+"../Sources/Queue.c" \
 "../Sources/User.c" \
 "../Sources/main.c" \
 
 C_SRCS += \
 ../Sources/OperativeSystem.c \
+../Sources/Queue.c \
 ../Sources/User.c \
 ../Sources/main.c \
 
 OBJS += \
 ./Sources/OperativeSystem.o \
+./Sources/Queue.o \
 ./Sources/User.o \
 ./Sources/main.o \
 
 C_DEPS += \
 ./Sources/OperativeSystem.d \
+./Sources/Queue.d \
 ./Sources/User.d \
 ./Sources/main.d \
 
 OBJS_QUOTED += \
 "./Sources/OperativeSystem.o" \
+"./Sources/Queue.o" \
 "./Sources/User.o" \
 "./Sources/main.o" \
 
 C_DEPS_QUOTED += \
 "./Sources/OperativeSystem.d" \
+"./Sources/Queue.d" \
 "./Sources/User.d" \
 "./Sources/main.d" \
 
 OBJS_OS_FORMAT += \
 ./Sources/OperativeSystem.o \
+./Sources/Queue.o \
 ./Sources/User.o \
 ./Sources/main.o \
 
@@ -50,9 +57,17 @@ Sources/OperativeSystem.o: ../Sources/OperativeSystem.c
 	@echo 'Finished building: $<'
 	@echo ' '
 
-Sources/User.o: ../Sources/User.c
+Sources/Queue.o: ../Sources/Queue.c
 	@echo 'Building file: $<'
 	@echo 'Executing target #2 $<'
+	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
+	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/Queue.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/Queue.o"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+Sources/User.o: ../Sources/User.c
+	@echo 'Building file: $<'
+	@echo 'Executing target #3 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/User.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/User.o"
 	@echo 'Finished building: $<'
@@ -60,7 +75,7 @@ Sources/User.o: ../Sources/User.c
 
 Sources/main.o: ../Sources/main.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #3 $<'
+	@echo 'Executing target #4 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/main.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/main.o"
 	@echo 'Finished building: $<'

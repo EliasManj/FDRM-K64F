@@ -3,6 +3,7 @@
 "./Project_Settings/Startup_Code/__arm_end.o"
 "./Sources/main.o"
 "./Sources/User.o"
+"./Sources/Queue.o"
 "./Sources/OperativeSystem.o"
 -mcpu=cortex-m4
 -mthumb

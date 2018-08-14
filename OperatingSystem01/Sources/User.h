@@ -8,6 +8,7 @@
 
 #ifndef USER_H_
 #define USER_H_
+
 #define IDLE 0
 #define READY 1
 #define RUNNING 2
@@ -17,7 +18,7 @@ typedef struct {
     volatile uint8_t priority;
     volatile uint8_t autostart;
     volatile uint32_t return_direction;
-    volatile uint32_t ap_task_init;
+    void (*ap_task_init)(void);
     volatile uint8_t state; //STATE 0:IDLE 1:READY 2:RUNNING 3:WAIT
 } TASK;
 

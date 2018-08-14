@@ -27,20 +27,25 @@ void TerminateTask(){
 }
 
 void OS_init(volatile TASK *tasks, int size){
-	//first = CheckHighestPriority(tasks);
+	checkAutoStartSetReady(tasks, size);
 	TASK firstTask;
-	int count = 0;
-	int i;
-	for(i=0;i<size;i++){
-		if(tasks[i].autostart == 1){
-			tasks[i].state = READY; //si tiene autostart la tarea se va a ready
-		}	
-		if(tasks[i].state == READY){
-			ready_arr[count] = tasks[i];
-			count++;
-		} 
-	}
 	firstTask = checkHighestPriority(ready_arr, size);
+	firstTask.ap_task_init();
+}
+
+void checkAutoStartSetReady(TASK *tasks, int size){
+	int count = 0;
+		int i;
+		for(i=0;i<size;i++){
+			if(tasks[i].autostart == 1){
+				tasks[i].state = READY; //si tiene autostart la tarea se va a ready
+				tasks[i].autostart = 0;
+			}	
+			if(tasks[i].state == READY){
+				ready_arr[count] = tasks[i];
+				count++;
+			} 
+		}
 }
 
 TASK checkHighestPriority(TASK *tasks, int size){
@@ -53,4 +58,6 @@ TASK checkHighestPriority(TASK *tasks, int size){
 	}
 	return highest;
 }
+
+
 
