@@ -8,12 +8,20 @@
 #include "User.h"
 #include "Queue.h"
 
+TASK empty = {0,0,0,'X',0,0};
+
+TASK get_empty_TASK(void){
+	return empty;
+}
+
 void Queue_Add(QueueType *queue, TASK task){
 	queue->tasklist[queue->tail] = task;
+	queue->tail = Queue_Pt_Inc(queue->tail, queue->size);
 }
 
 TASK Queue_Next(QueueType *queue){
 	TASK next_task = queue->tasklist[queue->head];
+	queue->tasklist[queue->head] = empty;
 	queue->head = Queue_Pt_Inc(queue->head, queue->size);
 	return next_task;
 }
@@ -40,6 +48,22 @@ uint8_t TaskList_TaskNumber(QueueType *queue){
 			len += queue->size;
 		}
 	return len;
+}
+
+void Sort_TaskList(QueueType *queue){		//Bubble sort, change to other sorts
+	int size;
+	size = STATIC_ALLOC;
+	int i, j;
+	TASK tmp;
+		for (i = queue->head; i < queue->tail; i++) {
+			for (j = queue->head; j < queue->tail; j++) {
+				if ((queue->tasklist[j].priority < queue->tasklist[i].priority) || ((queue->tasklist[i].id!='X') && (queue->tasklist[j].id=='X') )) {
+					tmp = queue->tasklist[i]; 					//Using temporary variable for storing last value
+					queue->tasklist[i] = queue->tasklist[j];            //replacing value
+					queue->tasklist[j] = tmp;             		//storing last value
+				}
+			}
+		}
 }
 
 
