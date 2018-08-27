@@ -2,7 +2,7 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-#Progress monitor hint: 7
+#Progress monitor hint: 14
 first : all
 -include ../makefile.init
 
@@ -58,7 +58,7 @@ all: warning-messages explicit-dependencies OperatingSystem01.elf secondary-outp
 # Tool invocations
 OperatingSystem01.elf: $(OBJS) $(USER_OBJS) ../Project_Settings/Linker_Files/MK64FN1M0_ram.ld
 	@echo 'Building target: $@'
-	@echo 'Executing target #8 $@'
+	@echo 'Executing target #15 $@'
 	@echo 'Invoking: ARM Ltd Windows GCC C Linker'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc"  $(USER_OBJS_QUOTED) $(LIBS_QUOTED) @"OperatingSystem01.args" -o"OperatingSystem01.elf"
 	@echo 'Finished building target: $@'
@@ -66,7 +66,7 @@ OperatingSystem01.elf: $(OBJS) $(USER_OBJS) ../Project_Settings/Linker_Files/MK6
 
 # Other Targets
 clean:
-	-$(RM) $(S_DEPS_QUOTED) "./*/*/*.o" "./*/*.o"  $(S_UPPER_DEPS_QUOTED) $(ASM_DEPS_QUOTED) $(ASM_UPPER_DEPS_QUOTED) $(SX_DEPS_QUOTED) $(EXECUTABLES_QUOTED) "./*/*/*.d" "./*/*.d"  $(ProjDirPath)/RAM/OperatingSystem01.elf
+	-$(RM) "./*/*.d"  "./*/*/*.o" "./*/*.o"  $(S_UPPER_DEPS_QUOTED) $(ASM_DEPS_QUOTED) $(ASM_UPPER_DEPS_QUOTED) $(SX_DEPS_QUOTED) $(EXECUTABLES_QUOTED) "./*/*/*.d" "./*/*.d"  $(ProjDirPath)/RAM/OperatingSystem01.elf
 	-@echo ' '
 
 secondary-outputs:

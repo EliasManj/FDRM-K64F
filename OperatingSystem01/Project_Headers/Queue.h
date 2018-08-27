@@ -19,11 +19,13 @@ struct Queue {
 
 typedef struct Queue QueueType;
 
+TASK get_empty_TASK(void);
 void Queue_Add(QueueType *queue, TASK task);
 TASK Queue_Next(QueueType *queue);
 uint8_t Queue_Pt_Inc(uint8_t pointer, uint8_t size);
 uint8_t TaskList_Empty(QueueType *queue);
 uint8_t TaskList_Full(QueueType *queue);
 uint8_t TaskList_TaskNumber(QueueType *queue);
+void Sort_TaskList(QueueType *queue);
 
 #endif /* QUEUE_H_ */

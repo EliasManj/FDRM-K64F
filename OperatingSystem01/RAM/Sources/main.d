@@ -12,7 +12,8 @@ Sources/main.o: ../Sources/main.c \
  C:/Freescale/CW\ MCU\ v10.7/MCU/ARM_GCC_Support/ewl/EWL_C/include/cstdint \
  C:/Freescale/CW\ MCU\ v10.7/MCU/ARM_GCC_Support/ewl/EWL_C/include/limits_api.h \
  C:/Freescale/CW\ MCU\ v10.7/MCU/ARM_GCC_Support/ewl/EWL_C/include/ewl_lib_ext1.h \
- ../Sources/User.h ../Sources/OperativeSystem.h
+ ../Sources/User.h ../Sources/OperativeSystem.h \
+ C:/Users/Elias\ g/FDRM-K64F/OperatingSystem01/Project_Headers/shared.h
 
 C:/Freescale/CW\ MCU\ v10.7/MCU/ARM_GCC_Support/ewl/EWL_C/include/lib_ewl.prefix:
 
@@ -43,3 +44,5 @@ C:/Freescale/CW\ MCU\ v10.7/MCU/ARM_GCC_Support/ewl/EWL_C/include/ewl_lib_ext1.h
 ../Sources/User.h:
 
 ../Sources/OperativeSystem.h:
+
+C:/Users/Elias\ g/FDRM-K64F/OperatingSystem01/Project_Headers/shared.h:

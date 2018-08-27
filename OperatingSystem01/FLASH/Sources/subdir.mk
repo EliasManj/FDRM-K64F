@@ -17,11 +17,21 @@ C_SRCS += \
 ../Sources/User.c \
 ../Sources/main.c \
 
+S_SRCS += \
+../Sources/to_lr.s \
+
+S_SRCS_QUOTED += \
+"../Sources/to_lr.s" \
+
+S_DEPS_QUOTED += \
+"./Sources/to_lr.d" \
+
 OBJS += \
 ./Sources/OperativeSystem.o \
 ./Sources/Queue.o \
 ./Sources/User.o \
 ./Sources/main.o \
+./Sources/to_lr.o \
 
 C_DEPS += \
 ./Sources/OperativeSystem.d \
@@ -29,11 +39,15 @@ C_DEPS += \
 ./Sources/User.d \
 ./Sources/main.d \
 
+S_DEPS += \
+./Sources/to_lr.d \
+
 OBJS_QUOTED += \
 "./Sources/OperativeSystem.o" \
 "./Sources/Queue.o" \
 "./Sources/User.o" \
 "./Sources/main.o" \
+"./Sources/to_lr.o" \
 
 C_DEPS_QUOTED += \
 "./Sources/OperativeSystem.d" \
@@ -46,6 +60,7 @@ OBJS_OS_FORMAT += \
 ./Sources/Queue.o \
 ./Sources/User.o \
 ./Sources/main.o \
+./Sources/to_lr.o \
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -78,6 +93,14 @@ Sources/main.o: ../Sources/main.c
 	@echo 'Executing target #4 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/main.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/main.o"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+Sources/to_lr.o: ../Sources/to_lr.s
+	@echo 'Building file: $<'
+	@echo 'Executing target #5 $<'
+	@echo 'Invoking: ARM Ltd Windows GCC Assembler'
+	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/to_lr.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/to_lr.o"
 	@echo 'Finished building: $<'
 	@echo ' '
 
