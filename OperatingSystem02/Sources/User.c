@@ -9,6 +9,7 @@
 #include "derivative.h" /* include peripheral declarations */
 #include "OperativeSystem.h"
 #include "shared.h"
+#include "RGB.h"
 
 void TASK_A(void) {
 	int a;
@@ -16,24 +17,19 @@ void TASK_A(void) {
 	int c;
 	a = 0xAAAAAAAA;
 	b = 0xBBBBBBBB;
-	Push_Btn();
+	RGB(1,0,1);
 	c = 0xCCCCCCCC;
 	ActivateTask(1);
-	SIM_SCGC5 |= (1 << 10);	//Activate system clock for PORTB
-	PORTB_PCR21 = (1<<8);	//Set PTB21 as GPIO
-	GPIOB_PDDR |= (1 << 21);	//Set PTB21 as output
-	GPIOB_PDOR = (1 << 21);	//Put PTB21 as HIGH
+	RGB(1,1,0);
 	TerminateTask();
 }
 
 void TASK_B(void) {
-	SIM_SCGC5 |= (1 << 10);	//Activate system clock for PORTB
-	PORTB_PCR21 = (1<<8);	//Set PTB21 as GPIO
+	RGB(1,0,0);
 	//ActivateTask(0);
-	GPIOB_PDDR |= (1 << 21);	//Set PTB21 as output
-	GPIOB_PDOR = ~(1 << 21);	//Put PTB21 as HIGH
-	TerminateTask();
-	//ChainTask(2);
+	RGB(0,1,0);
+	//TerminateTask();
+	ChainTask(2);
 }
 
 void TASK_C(void) {

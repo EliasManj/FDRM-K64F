@@ -8,6 +8,7 @@
 #include "OperativeSystem.h"
 #include "shared.h"
 #include "Alarms.h"
+#include "RGB.h"
 #define BOARD_SW_IRQ_HANDLER BOARD_SW3_IRQ_HANDLER
 #define BOARD_SW3_IRQ_HANDLER PORTA_IRQHandler
 
@@ -60,6 +61,7 @@ int main(void) {
 	alarm_b.task_id = 1;
 	alarm_list[1] = alarm_b;
 	//Interrupts
+	RGB_Init();
 	Push_Btn();
 	OS_init(task_arr, 3);
 	return 0;
@@ -77,5 +79,5 @@ void PORTC_IRQHandler() {
 	OS_save_context();
 	PORTC_PCR6 = 0x01080100;
 	DecrementAlarmsTicks();
-	//ActivateTaskIRQ(2);
+	ActivateTaskIRQ(2);
 }

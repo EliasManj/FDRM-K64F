@@ -27,7 +27,7 @@ void DecrementAlarmsTicks(void){
 	for(i=0;i<ALARM_LIST_SIZE;i++){
 		if(alarm_list[i].active==1){
 			if(--alarm_list[i].count==0){
-				AddTaskFromAlarm(alarm_list[i].alarm_id);
+				AddTaskFromAlarm(alarm_list[i].task_id);
 				if(alarm_list[i].reload == 1){
 					alarm_list[i].count = alarm_list[i].reference; 
 				} else {
