@@ -28,8 +28,8 @@ void TASK_B(void) {
 	RGB(1,0,0);
 	//ActivateTask(0);
 	RGB(0,1,0);
-	//TerminateTask();
-	ChainTask(2);
+	TerminateTask();
+	//ChainTask(2);
 }
 
 void TASK_C(void) {
