@@ -14,8 +14,14 @@
 void ActivateTask(TASK task);
 void ChainTask(TASK task);
 void TerminateTask();
-void OS_init(volatile TASK *tasks, int size);
+void OS_init(TASK *tasks, int size);
 TASK checkHighestPriority(TASK *tasks, int size);
+void checkAutoStartSetReady(TASK *tasks, int size);
+void RunTask(void);
+int CheckNextTask(void);
+void RunNextTask(void);
+TASK getTask(int id);
+void OS_save_context(void);
 
 
 

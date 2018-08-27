@@ -8,7 +8,7 @@
 #include "User.h"
 #include "Queue.h"
 
-TASK empty = {0,0,0,'X',0,0};
+TASK empty = {0,0,0,0,'X',0,0};
 
 TASK get_empty_TASK(void){
 	return empty;

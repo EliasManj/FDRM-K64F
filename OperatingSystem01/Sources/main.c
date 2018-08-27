@@ -6,19 +6,17 @@
 #include "derivative.h" /* include peripheral declarations */
 #include "User.h"
 #include "OperativeSystem.h"
-
+#include "shared.h"
+#define BOARD_SW_IRQ_HANDLER BOARD_SW3_IRQ_HANDLER
+#define BOARD_SW3_IRQ_HANDLER PORTA_IRQHandler
 
 void TASK_A(void);
 void TASK_B(void);
 void TASK_C(void);
-extern int myadd(int a, int b);
+void TASK_D(void);
+void Push_Btn(void);
 
-TASK task_arr[10];
-TASK task_a;
-TASK task_b;
-TASK task_c;
-
-int main(void){
+int main(void) {
 	//Pointer
 	//void (*task_a_pointer)(void) = &TASK_A;
 	//void (*task_b_pointer)(void) = &TASK_B;
@@ -48,38 +46,26 @@ int main(void){
 	task_arr[0] = task_a;
 	task_arr[1] = task_b;
 	task_arr[2] = task_c;
+	Push_Btn();
 	OS_init(task_arr, 3);
 	return 0;
 }
 
-void TASK_A(void){
-	ActivateTask(task_b);
-	SIM_SCGC5 |= (1<<10);	//Activate system clock for PORTB
-	PORTB_PCR21 = (1<<8);	//Set PTB21 as GPIO
-	GPIOB_PDDR |= (1<<21);	//Set PTB21 as output
-	GPIOB_PDOR = ~(1<<21);	//Put PTB21 as HIGH
-	TerminateTask();
+void Push_Btn(void) {
+	SIM_SCGC5 |= (1 << 11);
+	PORTC_PCR6 |= (1<<8);
+	PORTC_PCR6 |= (8<<16);
+	NVIC_ICPR(1) |= (1<<(61%32));		//Clean flag of LPTM in the interrupt vector
+	NVIC_ISER(1) |= (1<<(61%32)); 		//Activate the LPTM interrupt
 }
 
-void TASK_B(void){
-	SIM_SCGC5 |= (1<<10);	//Activate system clock for PORTB
-	PORTB_PCR21 = (1<<8);	//Set PTB21 as GPIO
-	GPIOB_PDDR |= (1<<21);	//Set PTB21 as output
-	GPIOB_PDOR = (1<<21);	//Put PTB21 as HIGH
-	ChainTask(task_c);
-}
-
-void TASK_C(void){
-	int i;
-	int counter = 0;
-	SIM_SCGC5 |= (1<<10);	//Activate system clock for PORTB
-	PORTB_PCR21 = (1<<8);	//Set PTB21 as GPIO
-	GPIOB_PDDR |= (1<<21);	//Set PTB21 as output
-	GPIOB_PDOR = (1<<21);	//Put PTB21 as HIGH
-	for(i = 0; i<5; i++){
-		for(counter; counter <= 1000000; counter++);
-			GPIOB_PDOR ^= (1<<21);	//Put PTB21 as HIGH
-			counter = 0;
-	}
-	TerminateTask();
+void PORTC_IRQHandler() {
+	//OS_save_context();
+	asm volatile
+	(
+			"pop {r1, r2}\n\t"
+	);
+	PORTC_PCR6 &= (0<<24);
+	GPIOB_PDOR |= (1 << 21);	//Put PTB21 as HIGH
+	ActivateTaskIRQ(task_b);
 }
