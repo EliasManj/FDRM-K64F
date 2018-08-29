@@ -22,18 +22,26 @@ void GetAlarm(uint8_t alarm_id, AlarmObj *alarm) {
 	*alarm = alarm_list[alarm_id];
 }
 
-void DecrementAlarmsTicks(void){
+void DecrementAlarmsTicks(void) {
 	int i;
-	for(i=0;i<ALARM_LIST_SIZE;i++){
-		if(alarm_list[i].active==1){
-			if(--alarm_list[i].count==0){
+	uint8_t AlarmActivated;
+	AlarmActivated = 0;
+	for (i = 0; i < ALARM_LIST_SIZE; i++) {
+		if (alarm_list[i].active == 1) {
+			if (--alarm_list[i].count == 0) {
 				AddTaskFromAlarm(alarm_list[i].task_id);
-				if(alarm_list[i].reload == 1){
-					alarm_list[i].count = alarm_list[i].reference; 
+				AlarmActivated = 1;
+				if (alarm_list[i].reload == 1) {
+					alarm_list[i].count = alarm_list[i].reference;
 				} else {
 					alarm_list[i].active = 0;
 				}
 			}
+		}
+	}
+	if (AlarmActivated) {
+		if (CheckNextTask()) {
+			RunNextTaskIRQ();
 		}
 	}
 }

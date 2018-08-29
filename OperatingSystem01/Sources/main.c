@@ -14,7 +14,7 @@ void TASK_A(void);
 void TASK_B(void);
 void TASK_C(void);
 void TASK_D(void);
-void Push_Btn(void);
+void Push_Btn_SW2(void);
 
 int main(void) {
 	//Pointer
@@ -46,12 +46,12 @@ int main(void) {
 	task_arr[0] = task_a;
 	task_arr[1] = task_b;
 	task_arr[2] = task_c;
-	Push_Btn();
+	Push_Btn_SW2();
 	OS_init(task_arr, 3);
 	return 0;
 }
 
-void Push_Btn(void) {
+void Push_Btn_SW2(void) {
 	SIM_SCGC5 |= (1 << 11);
 	PORTC_PCR6 |= (1<<8);
 	PORTC_PCR6 |= (8<<16);
