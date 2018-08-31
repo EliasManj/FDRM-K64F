@@ -18,7 +18,7 @@ typedef struct {
     volatile uint8_t priority;
     volatile uint8_t autostart;
     volatile uint32_t return_direction;
-    volatile uint32_t pointer;
+    volatile uint32_t return_sp;
     volatile char id;
     void (*ap_task_init)(void);
     volatile uint8_t state; //STATE 0:IDLE 1:READY 2:RUNNING 3:WAIT

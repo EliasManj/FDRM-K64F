@@ -42,10 +42,18 @@ int main(void) {
 	task_c.state = 0;
 	task_c.ap_task_init = &TASK_C;
 	task_c.id = 'C';
+	//TASK_D
+	task_d.priority = 1;
+	task_d.autostart = 1;
+	task_d.return_direction = 0;
+	task_d.state = 0;
+	task_d.ap_task_init = &TASK_D;
+	task_d.id = 'D';
 	//Array
 	task_arr[0] = task_a;
 	task_arr[1] = task_b;
 	task_arr[2] = task_c;
+	task_arr[3] = task_d;
 	//Set Alarms A
 	alarm_a.alarm_id = 0;
 	alarm_a.count = 2;
@@ -100,7 +108,6 @@ void LPTimer_Init(void) {
 void PORTA_IRQHandler() {
 	PORTA_PCR4 &= ~(0<<24);
 	RGB(0,1,0);
-	DecrementAlarmsTicks();
 }
 
 void PORTC_IRQHandler() {
@@ -109,13 +116,12 @@ void PORTC_IRQHandler() {
 	ActivateTaskIRQ(2);
 }
 
-
 void LPTimer_IRQHandler() {
 	DecrementAlarmsTicks();
 	LPTMR0_CSR |= (1 << 7); //Clear timer compare flag
 }
 
 void NMI_Handler() {
-	
+
 }
 

@@ -88,8 +88,9 @@ void RunNextTask() {
 	if (runningTask.id == 'X') {
 		runningTask = nextTask;
 		RunTask();
-	} else if (nextTask.priority > runningTask.priority) {
+	} else if (nextTask.priority >= runningTask.priority) {
 		runningTask.return_direction = a;
+		runningTask.return_sp = sp;
 		runningTask.state = READY;
 		Queue_Add(ready_queue, runningTask);
 		runningTask = nextTask;
@@ -133,7 +134,7 @@ void RunTask(void) {
 		runningTask.context_required = 0;
 		restore_context((uint32_t) context_pointer, context_lr);
 	} else if (runningTask.return_direction != 0) {
-		set_lr_sp(runningTask.return_direction, sp);
+		set_lr_sp(runningTask.return_direction, runningTask.return_sp);
 	} else {
 		runningTask.ap_task_init();
 	}
