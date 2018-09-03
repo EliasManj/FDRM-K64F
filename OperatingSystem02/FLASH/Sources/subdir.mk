@@ -7,6 +7,7 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS_QUOTED += \
 "../Sources/Alarms.c" \
+"../Sources/Mailbox.c" \
 "../Sources/OperativeSystem.c" \
 "../Sources/Queue.c" \
 "../Sources/RGB.c" \
@@ -15,6 +16,7 @@ C_SRCS_QUOTED += \
 
 C_SRCS += \
 ../Sources/Alarms.c \
+../Sources/Mailbox.c \
 ../Sources/OperativeSystem.c \
 ../Sources/Queue.c \
 ../Sources/RGB.c \
@@ -41,6 +43,7 @@ S_DEPS_QUOTED += \
 
 OBJS += \
 ./Sources/Alarms.o \
+./Sources/Mailbox.o \
 ./Sources/OperativeSystem.o \
 ./Sources/Queue.o \
 ./Sources/RGB.o \
@@ -53,6 +56,7 @@ OBJS += \
 
 C_DEPS += \
 ./Sources/Alarms.d \
+./Sources/Mailbox.d \
 ./Sources/OperativeSystem.d \
 ./Sources/Queue.d \
 ./Sources/RGB.d \
@@ -67,6 +71,7 @@ S_DEPS += \
 
 OBJS_QUOTED += \
 "./Sources/Alarms.o" \
+"./Sources/Mailbox.o" \
 "./Sources/OperativeSystem.o" \
 "./Sources/Queue.o" \
 "./Sources/RGB.o" \
@@ -79,6 +84,7 @@ OBJS_QUOTED += \
 
 C_DEPS_QUOTED += \
 "./Sources/Alarms.d" \
+"./Sources/Mailbox.d" \
 "./Sources/OperativeSystem.d" \
 "./Sources/Queue.d" \
 "./Sources/RGB.d" \
@@ -87,6 +93,7 @@ C_DEPS_QUOTED += \
 
 OBJS_OS_FORMAT += \
 ./Sources/Alarms.o \
+./Sources/Mailbox.o \
 ./Sources/OperativeSystem.o \
 ./Sources/Queue.o \
 ./Sources/RGB.o \
@@ -107,9 +114,17 @@ Sources/Alarms.o: ../Sources/Alarms.c
 	@echo 'Finished building: $<'
 	@echo ' '
 
-Sources/OperativeSystem.o: ../Sources/OperativeSystem.c
+Sources/Mailbox.o: ../Sources/Mailbox.c
 	@echo 'Building file: $<'
 	@echo 'Executing target #2 $<'
+	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
+	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/Mailbox.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/Mailbox.o"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+Sources/OperativeSystem.o: ../Sources/OperativeSystem.c
+	@echo 'Building file: $<'
+	@echo 'Executing target #3 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/OperativeSystem.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/OperativeSystem.o"
 	@echo 'Finished building: $<'
@@ -117,7 +132,7 @@ Sources/OperativeSystem.o: ../Sources/OperativeSystem.c
 
 Sources/Queue.o: ../Sources/Queue.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #3 $<'
+	@echo 'Executing target #4 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/Queue.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/Queue.o"
 	@echo 'Finished building: $<'
@@ -125,7 +140,7 @@ Sources/Queue.o: ../Sources/Queue.c
 
 Sources/RGB.o: ../Sources/RGB.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #4 $<'
+	@echo 'Executing target #5 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/RGB.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/RGB.o"
 	@echo 'Finished building: $<'
@@ -133,7 +148,7 @@ Sources/RGB.o: ../Sources/RGB.c
 
 Sources/User.o: ../Sources/User.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #5 $<'
+	@echo 'Executing target #6 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/User.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/User.o"
 	@echo 'Finished building: $<'
@@ -141,7 +156,7 @@ Sources/User.o: ../Sources/User.c
 
 Sources/main.o: ../Sources/main.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #6 $<'
+	@echo 'Executing target #7 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/main.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/main.o"
 	@echo 'Finished building: $<'
@@ -149,7 +164,7 @@ Sources/main.o: ../Sources/main.c
 
 Sources/restore_context.o: ../Sources/restore_context.s
 	@echo 'Building file: $<'
-	@echo 'Executing target #7 $<'
+	@echo 'Executing target #8 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC Assembler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/restore_context.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/restore_context.o"
 	@echo 'Finished building: $<'
@@ -157,7 +172,7 @@ Sources/restore_context.o: ../Sources/restore_context.s
 
 Sources/set_lr_sp.o: ../Sources/set_lr_sp.s
 	@echo 'Building file: $<'
-	@echo 'Executing target #8 $<'
+	@echo 'Executing target #9 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC Assembler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/set_lr_sp.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/set_lr_sp.o"
 	@echo 'Finished building: $<'
@@ -165,7 +180,7 @@ Sources/set_lr_sp.o: ../Sources/set_lr_sp.s
 
 Sources/test.o: ../Sources/test.s
 	@echo 'Building file: $<'
-	@echo 'Executing target #9 $<'
+	@echo 'Executing target #10 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC Assembler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/test.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/test.o"
 	@echo 'Finished building: $<'
@@ -173,7 +188,7 @@ Sources/test.o: ../Sources/test.s
 
 Sources/test2.o: ../Sources/test2.s
 	@echo 'Building file: $<'
-	@echo 'Executing target #10 $<'
+	@echo 'Executing target #11 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC Assembler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/test2.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/test2.o"
 	@echo 'Finished building: $<'

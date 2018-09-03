@@ -10,6 +10,7 @@
 "./Sources/RGB.o"
 "./Sources/Queue.o"
 "./Sources/OperativeSystem.o"
+"./Sources/Mailbox.o"
 "./Sources/Alarms.o"
 -mcpu=cortex-m4
 -mthumb

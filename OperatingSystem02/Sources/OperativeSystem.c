@@ -171,3 +171,7 @@ void OS_save_context(void) {
 	context_sp += 0x04;
 	context_pointer = (uint32_t*) context_sp;
 }
+
+void getRunningTask(TASK task){
+	task = runningTask;
+}

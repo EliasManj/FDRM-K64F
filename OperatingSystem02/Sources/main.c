@@ -9,8 +9,6 @@
 #include "shared.h"
 #include "Alarms.h"
 #include "RGB.h"
-//#define BOARD_SW_IRQ_HANDLER BOARD_SW3_IRQ_HANDLER
-//#define BOARD_SW3_IRQ_HANDLER PORTA_IRQHandler
 
 void TASK_A(void);
 void TASK_B(void);

@@ -26,7 +26,9 @@ TASK get_task_by_id(int task_id);
 void RunNextTaskIRQ(void);
 void ActivateTaskIRQ(int task_id);	
 void AddTaskFromAlarm(int task_id);
-
+void MailboxWrite(uint32_t mailbox_id, uint32_t data);
+void MailboxRead(uint32_t mailbox_id);
+void getRunningTask(TASK task);
 
 
 #endif /* OPERATIVESYSTEM_H_ */
