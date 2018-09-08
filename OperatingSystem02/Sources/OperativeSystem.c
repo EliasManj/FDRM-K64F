@@ -35,7 +35,7 @@ uint32_t context_lr;
 uint32_t context_sp;
 uint32_t sp;
 uint32_t *context_pointer;
-uint8_t interrupts_enabled;
+uint8_t interrupts_enabled; 
 
 QueueType readyQueue = { 0, 0, STATIC_ALLOC, { } };
 QueueType *ready_queue;
@@ -211,7 +211,7 @@ void LPTimer_Init(void) {
 	//LPTimer
 	SIM_SCGC5 |= (1 << 0); //Activate the LPTMR in the system control gating register
 	LPTMR0_PSR = 0b0000101; //Bypass the preescaler and select the LPO(low power oscilator of 1Khz as the source of the timer)
-	LPTMR0_CMR = 5000;			//compare of 500 clock cycles = .5 secs
+	LPTMR0_CMR = 1000;			//compare of 500 clock cycles = .5 secs
 	LPTMR0_CSR = 0b01000001; //Activate the timer and enable interrupts	
 	NVIC_ICPR(1) |= (1<<(58%32));		//Clean flag of LPTM in the interrupt vector
 	NVIC_ISER(1) |= (1<<(58%32));		//Activate the LPTM interrupt

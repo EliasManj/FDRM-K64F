@@ -40,8 +40,8 @@ void TASK_B(void) {
 	//pt = &x;
 	//ReadFromMailbox(0, pt);
 	//ReadFromMailbox(1, pt);
-	//TerminateTask();
-	ChainTask(TASK_C_ID);
+	TerminateTask();
+	//ChainTask(TASK_C_ID);
 }
 
 void TASK_C(void) {

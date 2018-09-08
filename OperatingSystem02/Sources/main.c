@@ -18,7 +18,7 @@ void LPTimer_Init(void);
 int main(void) {
 	//TASK A
 	task_a.priority = 2;
-	task_a.autostart = 1;
+	task_a.autostart = 0;
 	task_a.return_direction = 0;
 	task_a.state = 0;
 	task_a.ap_task_init = &TASK_A;
@@ -45,7 +45,7 @@ int main(void) {
 	task_c.multiplicity = 0;
 	//TASK_D
 	task_d.priority = 1;
-	task_d.autostart = 1;
+	task_d.autostart = 0;
 	task_d.return_direction = 0;
 	task_d.state = 0;
 	task_d.ap_task_init = &TASK_D;
@@ -54,7 +54,7 @@ int main(void) {
 	task_d.multiplicity = 0;
 	//TASK_E
 	task_e.priority = 0;
-	task_e.autostart = 1;
+	task_e.autostart = 0;
 	task_e.return_direction = 0;
 	task_e.state = 0;
 	task_e.ap_task_init = &TASK_E;
@@ -68,20 +68,20 @@ int main(void) {
 	task_arr[3] = task_d;
 	task_arr[4] = task_e;
 	//Set Alarms A
-	alarm_a.alarm_id = TASK_A_ID;
+	alarm_a.alarm_id = 0;
 	alarm_a.count = 2;
 	alarm_a.active = 1;
 	alarm_a.reference = 3;
 	alarm_a.reload = 1;
-	alarm_a.task_id = 1;
+	alarm_a.task_id = TASK_B_ID;
 	alarm_list[0] = alarm_a;
 	//Set Alarms B
-	alarm_b.alarm_id = TASK_B_ID;
-	alarm_b.count = 2;
+	alarm_b.alarm_id = 1;
+	alarm_b.count = 3;
 	alarm_b.active = 1;
 	alarm_b.reference = 4;
 	alarm_b.reload = 1;
-	alarm_b.task_id = 2;
+	alarm_b.task_id = TASK_D_ID;
 	alarm_list[1] = alarm_b;
 	//Mailboxes
 	CreateMailBox(0, TASK_A_ID, TASK_B_ID);
