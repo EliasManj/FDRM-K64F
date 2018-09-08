@@ -8,7 +8,7 @@
 #include "User.h"
 #include "Queue.h"
 
-TASK empty = {0,0,0,0,'X',0,0,0};
+TASK empty = {0,0,0,0,'X',0,0,0,0};
 
 TASK get_empty_TASK(void){
 	return empty;
@@ -55,15 +55,25 @@ void Sort_TaskList(QueueType *queue){		//Bubble sort, change to other sorts
 	size = STATIC_ALLOC;
 	int i, j;
 	TASK tmp;
+	int multiplicity;
 		for (i = queue->head; i < queue->tail; i++) {
 			for (j = queue->head; j < queue->tail; j++) {
-				if ((queue->tasklist[j].priority < queue->tasklist[i].priority) || ((queue->tasklist[i].id!='X') && (queue->tasklist[j].id=='X') )) {
+				multiplicity = (queue->tasklist[i].id == queue->tasklist[j].id) && (queue->tasklist[i].multiplicity > queue->tasklist[j].multiplicity);;
+				if (multiplicity||(queue->tasklist[j].priority < queue->tasklist[i].priority) || ((queue->tasklist[i].id!='X') && (queue->tasklist[j].id=='X') )) {
 					tmp = queue->tasklist[i]; 					//Using temporary variable for storing last value
 					queue->tasklist[i] = queue->tasklist[j];            //replacing value
 					queue->tasklist[j] = tmp;             		//storing last value
 				}
 			}
 		}
+		for(i=0; i<queue->tail-queue->head; i++){
+			queue->tasklist[i] = queue->tasklist[i+queue->head]; 
+			if(i!=queue->head+i){
+				queue->tasklist[i+queue->head] = empty;
+			}
+		}
+		queue->tail = queue->tail-queue->head;
+		queue->head = 0;
 }
 
 

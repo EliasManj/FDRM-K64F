@@ -15,7 +15,8 @@ Sources/main.o: ../Sources/main.c \
  ../Sources/User.h ../Sources/OperativeSystem.h \
  C:/Users/Elias\ g/FDRM-K64F/OperatingSystem02/Project_Headers/shared.h \
  C:/Users/Elias\ g/FDRM-K64F/OperatingSystem02/Project_Headers/Alarms.h \
- C:/Users/Elias\ g/FDRM-K64F/OperatingSystem02/Project_Headers/RGB.h
+ C:/Users/Elias\ g/FDRM-K64F/OperatingSystem02/Project_Headers/RGB.h \
+ C:/Users/Elias\ g/FDRM-K64F/OperatingSystem02/Project_Headers/Mailbox.h
 
 C:/Freescale/CW\ MCU\ v10.7/MCU/ARM_GCC_Support/ewl/EWL_C/include/lib_ewl.prefix:
 
@@ -52,3 +53,5 @@ C:/Users/Elias\ g/FDRM-K64F/OperatingSystem02/Project_Headers/shared.h:
 C:/Users/Elias\ g/FDRM-K64F/OperatingSystem02/Project_Headers/Alarms.h:
 
 C:/Users/Elias\ g/FDRM-K64F/OperatingSystem02/Project_Headers/RGB.h:
+
+C:/Users/Elias\ g/FDRM-K64F/OperatingSystem02/Project_Headers/Mailbox.h:

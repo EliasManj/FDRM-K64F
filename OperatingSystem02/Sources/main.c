@@ -9,51 +9,66 @@
 #include "shared.h"
 #include "Alarms.h"
 #include "RGB.h"
+#include "Mailbox.h"
 
-void TASK_A(void);
-void TASK_B(void);
-void TASK_C(void);
-void TASK_D(void);
 void Push_Btn_SW2(void);
 void Push_Btn_SW3(void);
 void LPTimer_Init(void);
 
 int main(void) {
 	//TASK A
-	task_a.priority = 0;
+	task_a.priority = 2;
 	task_a.autostart = 1;
 	task_a.return_direction = 0;
 	task_a.state = 0;
 	task_a.ap_task_init = &TASK_A;
-	task_a.id = 'A';
+	task_a.label = 'A';
+	task_a.id = 0;
+	task_a.multiplicity = 0;
 	//TASK B
-	task_b.priority = 1;
+	task_b.priority = 3;
 	task_b.autostart = 0;
 	task_b.return_direction = 0;
 	task_b.state = 0;
 	task_b.ap_task_init = &TASK_B;
-	task_b.id = 'B';
+	task_b.label = 'B';
+	task_b.id = 1;
+	task_b.multiplicity = 0;
 	//TASK_C
-	task_c.priority = 2;
+	task_c.priority = 4;
 	task_c.autostart = 0;
 	task_c.return_direction = 0;
 	task_c.state = 0;
 	task_c.ap_task_init = &TASK_C;
-	task_c.id = 'C';
+	task_c.label = 'C';
+	task_c.id = 2;
+	task_c.multiplicity = 0;
 	//TASK_D
 	task_d.priority = 1;
 	task_d.autostart = 1;
 	task_d.return_direction = 0;
 	task_d.state = 0;
 	task_d.ap_task_init = &TASK_D;
-	task_d.id = 'D';
+	task_d.label = 'D';
+	task_d.id = 3;
+	task_d.multiplicity = 0;
+	//TASK_E
+	task_e.priority = 0;
+	task_e.autostart = 1;
+	task_e.return_direction = 0;
+	task_e.state = 0;
+	task_e.ap_task_init = &TASK_E;
+	task_e.label = 'E';
+	task_e.id = 4;
+	task_e.multiplicity = 0;
 	//Array
 	task_arr[0] = task_a;
 	task_arr[1] = task_b;
 	task_arr[2] = task_c;
 	task_arr[3] = task_d;
+	task_arr[4] = task_e;
 	//Set Alarms A
-	alarm_a.alarm_id = 0;
+	alarm_a.alarm_id = TASK_A_ID;
 	alarm_a.count = 2;
 	alarm_a.active = 1;
 	alarm_a.reference = 3;
@@ -61,19 +76,22 @@ int main(void) {
 	alarm_a.task_id = 1;
 	alarm_list[0] = alarm_a;
 	//Set Alarms B
-	alarm_b.alarm_id = 1;
+	alarm_b.alarm_id = TASK_B_ID;
 	alarm_b.count = 2;
 	alarm_b.active = 1;
 	alarm_b.reference = 4;
 	alarm_b.reload = 1;
 	alarm_b.task_id = 2;
 	alarm_list[1] = alarm_b;
+	//Mailboxes
+	CreateMailBox(0, TASK_A_ID, TASK_B_ID);
+	CreateMailBox(1, TASK_A_ID, TASK_C_ID);
+	CreateMailBox(2, TASK_D_ID, TASK_E_ID);
 	//Interrupts
 	RGB_Init();
 	Push_Btn_SW2();
 	Push_Btn_SW3();
-	LPTimer_Init();
-	OS_init(task_arr, 3);
+	OS_init(task_arr, N_TASKS);
 	return 0;
 }
 
@@ -93,17 +111,8 @@ void Push_Btn_SW3(void) {
 	NVIC_ISER(1) |= (1<<(59%32));
 }
 
-void LPTimer_Init(void) {
-	//LPTimer
-	SIM_SCGC5 |= (1 << 0); //Activate the LPTMR in the system control gating register
-	LPTMR0_PSR = 0b0000101; //Bypass the preescaler and select the LPO(low power oscilator of 1Khz as the source of the timer)
-	LPTMR0_CMR = 500;			//compare of 500 clock cycles = .5 secs
-	LPTMR0_CSR = 0b01000001; //Activate the timer and enable interrupts	
-	NVIC_ICPR(1) |= (1<<(58%32));		//Clean flag of LPTM in the interrupt vector
-	NVIC_ISER(1) |= (1<<(58%32));		//Activate the LPTM interrupt
-}
-
 void PORTA_IRQHandler() {
+	OS_save_context();
 	PORTA_PCR4 &= ~(0<<24);
 	RGB(0,1,0);
 }
@@ -115,6 +124,7 @@ void PORTC_IRQHandler() {
 }
 
 void LPTimer_IRQHandler() {
+	OS_save_context();
 	DecrementAlarmsTicks();
 	LPTMR0_CSR |= (1 << 7); //Clear timer compare flag
 }

@@ -20,8 +20,8 @@ int main(void) {
 	Red_Led_Init();
 	Green_Led_Init();
 	Push_Btn_SW2();
-	Push_Btn_SW3();
-	LPTImer_Init();
+	//Push_Btn_SW3();
+	//LPTImer_Init();
 	//RGB
 	RGB(1, 0, 0);
 	RGB(0, 1, 0);

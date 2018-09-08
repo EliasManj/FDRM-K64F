@@ -34,5 +34,7 @@ void SetAbsAlarm(uint8_t alarm_id, int startTicks);
 void CancelAlarm(uint8_t alarm_id);
 void GetAlarm(uint8_t alarm_id, AlarmObj *alarm);
 void DecrementAlarmsTicks(void);
+void Alarms_Enable(void);
+void Alarms_Disable(void);
 
 #endif /* ALARMS_H_ */

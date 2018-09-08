@@ -18,7 +18,7 @@ extern void restore_context(uint32_t sp, uint32_t lr);
 extern void test();
 extern void test2();
 
-__attribute__( ( always_inline ))              __STATIC_INLINE uint32_t __get_LR(void) {
+__attribute__( ( always_inline ))                __STATIC_INLINE uint32_t __get_LR(void) {
 	register uint32_t result;
 
 	__ASM volatile ("MOV %0, LR\n" : "=r" (result) );
@@ -35,15 +35,20 @@ uint32_t context_lr;
 uint32_t context_sp;
 uint32_t sp;
 uint32_t *context_pointer;
+uint8_t interrupts_enabled;
 
 QueueType readyQueue = { 0, 0, STATIC_ALLOC, { } };
 QueueType *ready_queue;
 
 void ActivateTask(int task_id) {
 	a = __get_LR();
+	Interrupt_Disable();
 	sp = SP_c;
 	task = get_task_by_id(task_id);
 	task.state = READY;
+	if (runningTask.id == task.id) {
+		task.multiplicity = runningTask.multiplicity + 1;
+	}
 	//set_lr_sp(a, sp);
 	//test();
 	Queue_Add(ready_queue, task);
@@ -68,7 +73,7 @@ void ActivateTaskIRQ(int task_id) {
 }
 
 void RunNextTaskIRQ(void) {
-	if (runningTask.id == 'X') {
+	if (runningTask.label == 'X') {
 		runningTask = nextTask;
 		RunTask();
 	} else if (nextTask.priority > runningTask.priority) {
@@ -85,7 +90,7 @@ void RunNextTaskIRQ(void) {
 }
 
 void RunNextTask() {
-	if (runningTask.id == 'X') {
+	if (runningTask.label == 'X') {
 		runningTask = nextTask;
 		RunTask();
 	} else if (nextTask.priority >= runningTask.priority) {
@@ -105,6 +110,7 @@ void RunNextTask() {
 }
 
 void ChainTask(int task_id) {
+	Interrupt_Disable();
 	task = get_task_by_id(task_id);
 	Queue_Add(ready_queue, task);
 	task.state = READY;
@@ -112,6 +118,7 @@ void ChainTask(int task_id) {
 }
 
 void TerminateTask(void) {
+	Interrupt_Disable();
 	runningTask.state = IDLE;
 	runningTask = get_empty_TASK();
 	if (CheckNextTask()) {
@@ -132,21 +139,29 @@ void RunTask(void) {
 	runningTask.state = RUNNING;
 	if (runningTask.context_required == 1) {
 		runningTask.context_required = 0;
+		Interrupt_Enable();
 		restore_context((uint32_t) context_pointer, context_lr);
 	} else if (runningTask.return_direction != 0) {
+		Interrupt_Enable();
 		set_lr_sp(runningTask.return_direction, runningTask.return_sp);
 	} else {
+		Interrupt_Enable();
 		runningTask.ap_task_init();
 	}
 }
 
 void OS_init(TASK *tasks, int size) {
 	ready_queue = &readyQueue;
+	interrupts_enabled = 0;
 	checkAutoStartSetReady(tasks, size);
 	runningTask = get_empty_TASK();
+	//Alarms_Disable();
+	LPTimer_Init();
 	do {
 		if (CheckNextTask()) {
 			RunNextTask();
+		} else {
+			Interrupt_Enable();
 		}
 	} while (1);
 }
@@ -162,6 +177,22 @@ void checkAutoStartSetReady(TASK *tasks, int size) {
 	}
 }
 
+void Interrupt_Disable(void) {
+	if (interrupts_enabled == 1) {
+		NVIC_ICER(1) |= 0xFFFFFFFF;
+		interrupts_enabled = 0;
+	}
+}
+
+void Interrupt_Enable(void) {
+	if (interrupts_enabled == 0) {
+		NVIC_ISER(1) |= (1<<(61%32));
+		NVIC_ISER(1) |= (1<<(59%32));
+		NVIC_ISER(1) |= (1<<(58%32));		//Activate the LPTM interrupt
+		interrupts_enabled = 1;
+	}
+}
+
 TASK get_task_by_id(int task_id) {
 	return task_arr[task_id];
 }
@@ -172,6 +203,16 @@ void OS_save_context(void) {
 	context_pointer = (uint32_t*) context_sp;
 }
 
-void getRunningTask(TASK task){
-	task = runningTask;
+int32_t getRunningTaskID() {
+	return runningTask.id;
+}
+
+void LPTimer_Init(void) {
+	//LPTimer
+	SIM_SCGC5 |= (1 << 0); //Activate the LPTMR in the system control gating register
+	LPTMR0_PSR = 0b0000101; //Bypass the preescaler and select the LPO(low power oscilator of 1Khz as the source of the timer)
+	LPTMR0_CMR = 5000;			//compare of 500 clock cycles = .5 secs
+	LPTMR0_CSR = 0b01000001; //Activate the timer and enable interrupts	
+	NVIC_ICPR(1) |= (1<<(58%32));		//Clean flag of LPTM in the interrupt vector
+	NVIC_ISER(1) |= (1<<(58%32));		//Activate the LPTM interrupt
 }

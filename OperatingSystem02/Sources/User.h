@@ -5,6 +5,7 @@
  *      Author: Elias g
  */
 #include "derivative.h"
+#include "OperativeSystem.h"
 
 #ifndef USER_H_
 #define USER_H_
@@ -14,25 +15,24 @@
 #define RUNNING 2
 #define WAIT 3
 
-typedef struct {
-    volatile uint8_t priority;
-    volatile uint8_t autostart;
-    volatile uint32_t return_direction;
-    volatile uint32_t return_sp;
-    volatile char id;
-    void (*ap_task_init)(void);
-    volatile uint8_t state; //STATE 0:IDLE 1:READY 2:RUNNING 3:WAIT
-    volatile uint8_t context_required;
-} TASK;
+#define TASK_A_ID 0
+#define TASK_B_ID 1
+#define TASK_C_ID 2
+#define TASK_D_ID 3
+#define TASK_E_ID 4
+#define N_TASKS 5
 
 void TASK_A(void);
 void TASK_B(void);
 void TASK_C(void);
+void TASK_D(void);
+void TASK_E(void);
+
 TASK task_arr[10];
 TASK task_a;
 TASK task_b;
 TASK task_c;
 TASK task_d;
-
+TASK task_e;
 
 #endif /* USER_H_ */
