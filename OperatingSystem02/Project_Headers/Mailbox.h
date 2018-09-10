@@ -14,6 +14,8 @@ struct Mailbox {
 	volatile int32_t *data;
 	volatile uint32_t consumer_id;
 	volatile uint32_t producer_id;
+	volatile uint8_t has_data;
+	volatile uint8_t consumer_waiting;
 };
 typedef struct Mailbox MailboxObj;
 uint16_t mailbox_n;

@@ -18,7 +18,7 @@ extern void restore_context(uint32_t sp, uint32_t lr);
 extern void test();
 extern void test2();
 
-__attribute__( ( always_inline ))        __STATIC_INLINE uint32_t __get_LR(void) {
+__attribute__( ( always_inline ))          __STATIC_INLINE uint32_t __get_LR(void) {
 	register uint32_t result;
 
 	__ASM volatile ("MOV %0, LR\n" : "=r" (result) );
@@ -32,6 +32,8 @@ uint8_t interrupts_enabled;
 
 QueueType readyQueue = { 0, 0, STATIC_ALLOC, { } };
 QueueType *ready_queue;
+QueueType waitQueue = { 0, 0, STATIC_ALLOC, { } };
+QueueType *wait_queue;
 
 void ActivateTask(int task_id) {
 	task_incomplete_rd = __get_LR();
@@ -128,6 +130,7 @@ void RunTask(void) {
 
 void OS_init(TASK *tasks, int size) {
 	ready_queue = &readyQueue;
+	wait_queue = &waitQueue;
 	interrupts_enabled = 0;
 	checkAutoStartSetReady(tasks, size);
 	runningTask = get_empty_TASK();
@@ -205,14 +208,15 @@ void RunNextTaskAlarm(void) {
 	if (!start) {
 
 	} else {
-		task_incomplete_rd = recover_context(alarm_task_context_sp, interrupted_task_sp_addr);
+		task_incomplete_rd = recover_context(alarm_task_context_sp,
+				interrupted_task_sp_addr);
 		if (CheckNextTask()) {
 			if (runningTask.label == 'X') {
 				runningTask = nextTask;
 				RunTask();
 			} else if (nextTask.priority >= runningTask.priority) {
-				runningTask.return_direction = task_incomplete_rd+1;
-				runningTask.return_sp = alarm_task_context_sp-0x50;
+				runningTask.return_direction = task_incomplete_rd + 1;
+				runningTask.return_sp = alarm_task_context_sp - 0x50;
 				runningTask.state = READY;
 				Queue_Add(ready_queue, runningTask);
 				runningTask = nextTask;
@@ -243,5 +247,31 @@ void RunNextTaskIRQ(void) {
 			Queue_Add(ready_queue, nextTask);
 			//runningTask.return_direction = a;
 		}
+	}
+}
+
+void move_current_task_to_wait(void) {
+	runningTask.return_direction = task_incomplete_rd;
+	runningTask.return_sp = sp;
+	runningTask.state = WAIT;
+	Queue_Add(wait_queue, runningTask);
+	runningTask = get_empty_TASK();
+	while (!CheckNextTask()) {
+		if (interrupts_enabled == 0) {
+			NVIC_ISER(1) |= (1<<(61%32));
+			NVIC_ISER(1) |= (1<<(59%32));
+			NVIC_ISER(1) |= (1<<(58%32));		//Activate the LPTM interrupt
+			interrupts_enabled = 1;
+		}
+	}
+	RunNextTask();
+}
+
+void move_waiting_task_to_ready(uint32_t consumer_id) {
+	if (!TaskList_Empty(wait_queue)) {
+		Sort_TaskList(wait_queue);
+		Queue_Search(wait_queue, consumer_id);
+		nextTask = Queue_Next(wait_queue);
+		RunNextTask();
 	}
 }

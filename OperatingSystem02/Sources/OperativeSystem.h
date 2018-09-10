@@ -68,6 +68,8 @@ extern void pop_twice();
 extern void clean_stack_from_chaintask();
 extern uint32_t recover_context(uint32_t interrumped_task_sp, uint32_t memory_addr);
 void RunNextTaskAlarm(void);
+void move_current_task_to_wait(void);
+void move_waiting_task_to_ready(uint32_t consumer_id);
 
 #define OS_save_context_alarm(void) {\
 	task_incomplete_rd = LR_c;\

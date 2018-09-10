@@ -23,11 +23,11 @@ void TASK_A(void) {
 	uint32_t *pt;
 	pt = &x;
 	ReadFromMailbox(0, pt);
-	ReadFromMailbox(1, pt);
+	//ReadFromMailbox(1, pt);
 	ActivateTask(TASK_B_ID);
 	RGB(1, 1, 0);
-	TerminateTask();
-	//ChainTask(TASK_D_ID);
+	//TerminateTask();
+	ChainTask(TASK_D_ID);
 }
 
 void TASK_B(void) {
@@ -40,7 +40,7 @@ void TASK_B(void) {
 	RGB(0, 1, 1);
 	RGB(0, 0, 0);
 	WriteToMailbox(0, a);
-	WriteToMailbox(1, 0xCCCCCCCC);
+	//WriteToMailbox(1, 0xCCCCCCCC);
 	TerminateTask();
 	//ChainTask(TASK_C_ID);
 }
@@ -71,6 +71,7 @@ void TASK_D(void) {
 	WriteToMailbox(2, 0xDDDDDDDD);
 	hey = 2;
 	TerminateTask();
+	//ChainTask(TASK_E_ID);
 }
 
 void TASK_E(void) {

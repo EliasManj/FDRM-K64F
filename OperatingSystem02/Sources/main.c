@@ -70,7 +70,7 @@ int main(void) {
 	task_arr[4] = task_e;
 	//Set Alarms A
 	alarm_list[0].alarm_id = 0;
-	alarm_list[0].count = 1;
+	alarm_list[0].count = 2;
 	alarm_list[0].active = 1;
 	alarm_list[0].reference = 3;
 	alarm_list[0].reload = 1;

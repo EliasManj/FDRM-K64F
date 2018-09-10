@@ -27,5 +27,6 @@ uint8_t TaskList_Empty(QueueType *queue);
 uint8_t TaskList_Full(QueueType *queue);
 uint8_t TaskList_TaskNumber(QueueType *queue);
 void Sort_TaskList(QueueType *queue);
+void Queue_Search(QueueType *queue, uint32_t task_id);
 
 #endif /* QUEUE_H_ */

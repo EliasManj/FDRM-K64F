@@ -12,7 +12,7 @@ finish_isr:
 	cpy r7, r3
 	str r1, [r3]
 	add r3, #0x04
-	ldr r4, =0x30f0
+	ldr r4, =0x32c8
 	str r4, [r3]
 	add r5, r5, #0x10
 	sub r7, r7, #0x10
