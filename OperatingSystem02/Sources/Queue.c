@@ -51,8 +51,6 @@ uint8_t TaskList_TaskNumber(QueueType *queue){
 }
 
 void Sort_TaskList(QueueType *queue){		//Bubble sort, change to other sorts
-	int size;
-	size = STATIC_ALLOC;
 	int i, j;
 	TASK tmp;
 	int multiplicity;

@@ -13,35 +13,28 @@
 #define __ASM __asm /*!< asm keyword for GNU Compiler */ 
 #define __INLINE inline /*!< inline keyword for GNU Compiler */ 
 #define __STATIC_INLINE static inline 
-extern void set_lr_sp(uint32_t lr, uint32_t sp);
+extern void set_pc_sp(uint32_t lr, uint32_t sp);
 extern void restore_context(uint32_t sp, uint32_t lr);
 extern void test();
 extern void test2();
 
-__attribute__( ( always_inline ))                __STATIC_INLINE uint32_t __get_LR(void) {
+__attribute__( ( always_inline ))        __STATIC_INLINE uint32_t __get_LR(void) {
 	register uint32_t result;
 
 	__ASM volatile ("MOV %0, LR\n" : "=r" (result) );
 	return (result);
 }
 
-register unsigned long LR_c __asm("lr");
-
 TASK task;
 TASK runningTask;
 TASK nextTask;
-uint32_t a;
-uint32_t context_lr;
-uint32_t context_sp;
-uint32_t sp;
-uint32_t *context_pointer;
-uint8_t interrupts_enabled; 
+uint8_t interrupts_enabled;
 
 QueueType readyQueue = { 0, 0, STATIC_ALLOC, { } };
 QueueType *ready_queue;
 
 void ActivateTask(int task_id) {
-	a = __get_LR();
+	task_incomplete_rd = __get_LR();
 	Interrupt_Disable();
 	sp = SP_c;
 	task = get_task_by_id(task_id);
@@ -72,29 +65,12 @@ void ActivateTaskIRQ(int task_id) {
 	}
 }
 
-void RunNextTaskIRQ(void) {
-	if (runningTask.label == 'X') {
-		runningTask = nextTask;
-		RunTask();
-	} else if (nextTask.priority > runningTask.priority) {
-		runningTask.state = READY;
-		runningTask.context_required = 1;
-		Queue_Add(ready_queue, runningTask);
-		runningTask = nextTask;
-		RunTask();
-	} else {
-		//Case when a task activated another task that has lower priority so the current task continues
-		Queue_Add(ready_queue, nextTask);
-		//runningTask.return_direction = a;
-	}
-}
-
 void RunNextTask() {
 	if (runningTask.label == 'X') {
 		runningTask = nextTask;
 		RunTask();
 	} else if (nextTask.priority >= runningTask.priority) {
-		runningTask.return_direction = a;
+		runningTask.return_direction = task_incomplete_rd;
 		runningTask.return_sp = sp;
 		runningTask.state = READY;
 		Queue_Add(ready_queue, runningTask);
@@ -143,7 +119,7 @@ void RunTask(void) {
 		restore_context((uint32_t) context_pointer, context_lr);
 	} else if (runningTask.return_direction != 0) {
 		Interrupt_Enable();
-		set_lr_sp(runningTask.return_direction, runningTask.return_sp);
+		set_pc_sp(runningTask.return_direction, runningTask.return_sp);
 	} else {
 		Interrupt_Enable();
 		runningTask.ap_task_init();
@@ -157,6 +133,14 @@ void OS_init(TASK *tasks, int size) {
 	runningTask = get_empty_TASK();
 	//Alarms_Disable();
 	LPTimer_Init();
+	RunNextTaskAlarm();
+	start = 1;
+	OS_loop();
+}
+
+void OS_loop(void) {
+	os_loop_sp = SP_c;
+	os_loop_pc = PC_c;
 	do {
 		if (CheckNextTask()) {
 			RunNextTask();
@@ -208,11 +192,56 @@ int32_t getRunningTaskID() {
 }
 
 void LPTimer_Init(void) {
-	//LPTimer
+//LPTimer
 	SIM_SCGC5 |= (1 << 0); //Activate the LPTMR in the system control gating register
 	LPTMR0_PSR = 0b0000101; //Bypass the preescaler and select the LPO(low power oscilator of 1Khz as the source of the timer)
-	LPTMR0_CMR = 1000;			//compare of 500 clock cycles = .5 secs
+	LPTMR0_CMR = 500;			//compare of 1000 clock cycles = 1 secs
 	LPTMR0_CSR = 0b01000001; //Activate the timer and enable interrupts	
 	NVIC_ICPR(1) |= (1<<(58%32));		//Clean flag of LPTM in the interrupt vector
 	NVIC_ISER(1) |= (1<<(58%32));		//Activate the LPTM interrupt
+}
+
+void RunNextTaskAlarm(void) {
+	if (!start) {
+
+	} else {
+		task_incomplete_rd = recover_context(alarm_task_context_sp, interrupted_task_sp_addr);
+		if (CheckNextTask()) {
+			if (runningTask.label == 'X') {
+				runningTask = nextTask;
+				RunTask();
+			} else if (nextTask.priority >= runningTask.priority) {
+				runningTask.return_direction = task_incomplete_rd+1;
+				runningTask.return_sp = alarm_task_context_sp;
+				runningTask.state = READY;
+				Queue_Add(ready_queue, runningTask);
+				runningTask = nextTask;
+				RunTask();
+			} else {
+				//Case when a task activated another task that has lower priority so the current task continues
+				Queue_Add(ready_queue, nextTask);
+				//runningTask.return_direction = a;
+				//set_lr_sp(runningTask.return_direction, sp);
+			}
+		}
+	}
+}
+
+void RunNextTaskIRQ(void) {
+	if (CheckNextTask()) {
+		if (runningTask.label == 'X') {
+			runningTask = nextTask;
+			RunTask();
+		} else if (nextTask.priority > runningTask.priority) {
+			runningTask.state = READY;
+			runningTask.context_required = 1;
+			Queue_Add(ready_queue, runningTask);
+			runningTask = nextTask;
+			RunTask();
+		} else {
+			//Case when a task activated another task that has lower priority so the current task continues
+			Queue_Add(ready_queue, nextTask);
+			//runningTask.return_direction = a;
+		}
+	}
 }

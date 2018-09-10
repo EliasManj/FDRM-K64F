@@ -27,7 +27,6 @@ AlarmObj alarm_c;
 AlarmObj alarm_d;
 AlarmObj alarm_e;
 
-void DecrementAlarmsTicks(void);
 int GetAlarmBase(uint8_t alarm_id);
 void SetRelAlarm(uint8_t alarm_id, int incrementTicks);
 void SetAbsAlarm(uint8_t alarm_id, int startTicks);
@@ -36,5 +35,32 @@ void GetAlarm(uint8_t alarm_id, AlarmObj *alarm);
 void DecrementAlarmsTicks(void);
 void Alarms_Enable(void);
 void Alarms_Disable(void);
+extern void set_pc_sp_lr(uint32_t pc, uint32_t sp, uint32_t lr);
+extern void pop_r7_pc(void);
+extern void set_sp(uint32_t sp);
+extern uint32_t finish_isr(uint32_t isr_return, uint32_t isr_sp);
+
+#define DecrementAlarmsTicks(void) {\
+	uint32_t lr = LR_c;\
+	int i;\
+	uint8_t AlarmActivated;\
+	AlarmActivated = 0;\
+	for (i = 0; i < ALARM_LIST_SIZE; i++) {\
+		if (alarm_list[i].active == 1) {\
+			if (--alarm_list[i].count == 0) {\
+				AddTaskFromAlarm(alarm_list[i].task_id);\
+				AlarmActivated = 1;\
+				if (alarm_list[i].reload == 1) {\
+					alarm_list[i].count = alarm_list[i].reference;\
+				} else {\
+					alarm_list[i].active = 0;\
+				}\
+			}\
+		}\
+	}\
+	if(AlarmActivated){\
+		alarm_task_context_sp = finish_isr(PC_c, alarm_task_context_sp);\
+	}\
+}\
 
 #endif /* ALARMS_H_ */

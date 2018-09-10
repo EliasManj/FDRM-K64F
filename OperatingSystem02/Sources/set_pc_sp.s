@@ -1,8 +1,8 @@
-.globl   set_lr_sp
+.globl   set_pc_sp
 .p2align 2
-.type    set_lr_sp,%function
+.type    set_pc_sp,%function
 		
-set_lr_sp:                    
+set_pc_sp:                    
 	.fnstart
 	mov 	r7, r1
 	add		r7, r7, #0x50

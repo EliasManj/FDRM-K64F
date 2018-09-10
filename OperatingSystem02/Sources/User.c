@@ -16,37 +16,37 @@
 int hey;
 
 void TASK_A(void) {
-	int a;
-	a = 0xAAAAAAAA;
 	RGB(1, 0, 1);
 	RGB(1, 1, 1);
 	RGB(1, 0, 1);
-	WriteToMailbox(0, a);
-	WriteToMailbox(1, 0xCCCCCCCC);
+	uint32_t x;
+	uint32_t *pt;
+	pt = &x;
+	ReadFromMailbox(0, pt);
+	ReadFromMailbox(1, pt);
 	ActivateTask(TASK_B_ID);
 	RGB(1, 1, 0);
 	TerminateTask();
+	//ChainTask(TASK_D_ID);
 }
 
 void TASK_B(void) {
+	int a;
+	a = 0xAAAAAAAA;
 	RGB(1, 0, 0);
 	//ActivateTask(TASK_D_ID);
 	RGB(0, 1, 0);
 	RGB(1, 1, 0);
 	RGB(0, 1, 1);
 	RGB(0, 0, 0);
-	//uint32_t x;
-	//uint32_t *pt;
-	//pt = &x;
-	//ReadFromMailbox(0, pt);
-	//ReadFromMailbox(1, pt);
+	WriteToMailbox(0, a);
+	WriteToMailbox(1, 0xCCCCCCCC);
 	TerminateTask();
 	//ChainTask(TASK_C_ID);
 }
 
 void TASK_C(void) {
 	int i;
-	int counter = 0;
 	uint32_t x;
 	uint32_t *pt;
 	pt = &x;
@@ -56,10 +56,7 @@ void TASK_C(void) {
 	GPIOB_PDDR |= (1 << 21);	//Set PTB21 as output
 	GPIOB_PDOR = (1 << 21);	//Put PTB21 as HIGH
 	for (i = 0; i < 5; i++) {
-		//for (counter; counter <= 0; counter++)
-		;
 		GPIOB_PDOR ^= (1 << 21);	//Put PTB21 as HIGH
-		counter = 0;
 	}
 	TerminateTask();
 }

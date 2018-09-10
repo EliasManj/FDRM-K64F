@@ -23,6 +23,23 @@ typedef struct {
 	volatile uint8_t multiplicity;
 } TASK;
 
+uint32_t *context_pointer;
+uint32_t *alarm_task_context_pointer;
+uint32_t os_loop_sp;
+uint32_t os_loop_pc;
+uint32_t task_incomplete_rd;
+uint32_t context_lr;
+uint32_t context_sp;
+uint32_t alarm_task_context_sp;
+uint32_t sp;
+uint32_t alarm_task_context_sp_addr;
+uint32_t *interrupted_task_sp_pointer;
+uint32_t interrupted_task_sp_addr;
+uint8_t start;
+
+register unsigned long PC_c __asm("pc");
+register unsigned long LR_c __asm("lr");
+
 void ActivateTask(int task_id);
 void ChainTask(int task_id);
 void TerminateTask();
@@ -44,5 +61,22 @@ int32_t getRunningTaskID(void);
 void LPTimer_Init(void);
 void Interrupt_Enable(void);
 void Interrupt_Disable(void);
+void OS_loop(void);
+void OS_save_context_alarm(void);
+extern void jump_to_os_loop(uint32_t pc, uint32_t);
+extern void pop_twice();
+extern void clean_stack_from_chaintask();
+extern uint32_t recover_context(uint32_t interrumped_task_sp, uint32_t memory_addr);
+void RunNextTaskAlarm(void);
+
+#define OS_save_context_alarm(void) {\
+	task_incomplete_rd = LR_c;\
+	alarm_task_context_sp = SP_c;\
+	interrupted_task_sp_addr = alarm_task_context_sp;\
+	interrupted_task_sp_pointer = (uint32_t*)interrupted_task_sp_addr;\
+	sp = *interrupted_task_sp_pointer;\
+	context_sp = alarm_task_context_sp;\
+	alarm_task_context_pointer = (uint32_t*) alarm_task_context_sp;\
+}\
 
 #endif /* OPERATIVESYSTEM_H_ */

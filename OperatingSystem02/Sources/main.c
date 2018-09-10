@@ -14,11 +14,12 @@
 void Push_Btn_SW2(void);
 void Push_Btn_SW3(void);
 void LPTimer_Init(void);
+extern void set_lr(uint32_t lr);
 
 int main(void) {
 	//TASK A
 	task_a.priority = 2;
-	task_a.autostart = 0;
+	task_a.autostart = 1;
 	task_a.return_direction = 0;
 	task_a.state = 0;
 	task_a.ap_task_init = &TASK_A;
@@ -68,23 +69,38 @@ int main(void) {
 	task_arr[3] = task_d;
 	task_arr[4] = task_e;
 	//Set Alarms A
-	alarm_a.alarm_id = 0;
-	alarm_a.count = 2;
-	alarm_a.active = 1;
-	alarm_a.reference = 3;
-	alarm_a.reload = 1;
-	alarm_a.task_id = TASK_B_ID;
-	alarm_list[0] = alarm_a;
+	alarm_list[0].alarm_id = 0;
+	alarm_list[0].count = 1;
+	alarm_list[0].active = 1;
+	alarm_list[0].reference = 3;
+	alarm_list[0].reload = 1;
+	alarm_list[0].task_id = TASK_B_ID;
 	//Set Alarms B
-	alarm_b.alarm_id = 1;
-	alarm_b.count = 3;
-	alarm_b.active = 1;
-	alarm_b.reference = 4;
-	alarm_b.reload = 1;
-	alarm_b.task_id = TASK_D_ID;
-	alarm_list[1] = alarm_b;
+	alarm_list[1].alarm_id = 1;
+	alarm_list[1].count = 3;
+	alarm_list[1].active = 1;
+	alarm_list[1].reference = 4;
+	alarm_list[1].reload = 0;
+	alarm_list[1].task_id = TASK_D_ID;
+	/*
+	 alarm_a.alarm_id = 0;
+	 alarm_a.count = 2;
+	 alarm_a.active = 1;
+	 alarm_a.reference = 3;
+	 alarm_a.reload = 1;
+	 alarm_a.task_id = TASK_B_ID;
+	 alarm_list[0] = alarm_a;
+	 //Set Alarms B
+	 alarm_b.alarm_id = 1;
+	 alarm_b.count = 3;
+	 alarm_b.active = 1;
+	 alarm_b.reference = 4;
+	 alarm_b.reload = 1;
+	 alarm_b.task_id = TASK_D_ID;
+	 alarm_list[1] = alarm_b;
+	 */
 	//Mailboxes
-	CreateMailBox(0, TASK_A_ID, TASK_B_ID);
+	CreateMailBox(0, TASK_B_ID, TASK_A_ID);
 	CreateMailBox(1, TASK_A_ID, TASK_C_ID);
 	CreateMailBox(2, TASK_D_ID, TASK_E_ID);
 	//Interrupts
@@ -112,21 +128,22 @@ void Push_Btn_SW3(void) {
 }
 
 void PORTA_IRQHandler() {
-	OS_save_context();
+	//OS_save_context();
 	PORTA_PCR4 &= ~(0<<24);
-	RGB(0,1,0);
+	RGB(0, 1, 0);
 }
 
 void PORTC_IRQHandler() {
-	OS_save_context();
+	OS_save_context_alarm();
 	PORTC_PCR6 = 0x01080100;
-	ActivateTaskIRQ(2);
+	//ActivateTaskIRQ(2);
+	DecrementAlarmsTicks();
 }
 
 void LPTimer_IRQHandler() {
-	OS_save_context();
-	DecrementAlarmsTicks();
+	//OS_save_context_alarm();
 	LPTMR0_CSR |= (1 << 7); //Clear timer compare flag
+	//DecrementAlarmsTicks();
 }
 
 void NMI_Handler() {
