@@ -212,7 +212,7 @@ void RunNextTaskAlarm(void) {
 				RunTask();
 			} else if (nextTask.priority >= runningTask.priority) {
 				runningTask.return_direction = task_incomplete_rd+1;
-				runningTask.return_sp = alarm_task_context_sp;
+				runningTask.return_sp = alarm_task_context_sp-0x50;
 				runningTask.state = READY;
 				Queue_Add(ready_queue, runningTask);
 				runningTask = nextTask;
