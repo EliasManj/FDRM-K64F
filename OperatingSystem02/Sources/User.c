@@ -22,11 +22,12 @@ void TASK_A(void) {
 	uint32_t x;
 	uint32_t *pt;
 	pt = &x;
-	ReadFromMailbox(0, pt);
+	//ReadFromMailbox(0, pt);
 	//ReadFromMailbox(1, pt);
 	ActivateTask(TASK_B_ID);
 	RGB(1, 1, 0);
 	//TerminateTask();
+	ActivateTask(TASK_D_ID);
 	ChainTask(TASK_D_ID);
 }
 
@@ -50,7 +51,7 @@ void TASK_C(void) {
 	uint32_t x;
 	uint32_t *pt;
 	pt = &x;
-	ReadFromMailbox(1, pt);
+	//ReadFromMailbox(1, pt);
 	SIM_SCGC5 |= (1 << 10);	//Activate system clock for PORTB
 	PORTB_PCR21 = (1<<8);	//Set PTB21 as GPIO
 	GPIOB_PDDR |= (1 << 21);	//Set PTB21 as output

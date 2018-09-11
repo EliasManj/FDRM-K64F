@@ -25,7 +25,7 @@ int8_t WriteToMailbox(uint32_t mailbox_id, uint32_t data) {
 int32_t ReadFromMailbox(uint32_t mailbox_id, uint32_t *placeholder) {
 	task_incomplete_rd = LR_c;
 	Interrupt_Disable();
-	sp = SP_c;
+	sp = SP_c-0x38;
 	if (mailbox_list[mailbox_id].has_data == 0) {
 		mailbox_list[mailbox_id].consumer_waiting = 1;
 		move_current_task_to_wait();

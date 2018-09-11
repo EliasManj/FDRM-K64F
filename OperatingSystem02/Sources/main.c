@@ -82,23 +82,6 @@ int main(void) {
 	alarm_list[1].reference = 4;
 	alarm_list[1].reload = 0;
 	alarm_list[1].task_id = TASK_D_ID;
-	/*
-	 alarm_a.alarm_id = 0;
-	 alarm_a.count = 2;
-	 alarm_a.active = 1;
-	 alarm_a.reference = 3;
-	 alarm_a.reload = 1;
-	 alarm_a.task_id = TASK_B_ID;
-	 alarm_list[0] = alarm_a;
-	 //Set Alarms B
-	 alarm_b.alarm_id = 1;
-	 alarm_b.count = 3;
-	 alarm_b.active = 1;
-	 alarm_b.reference = 4;
-	 alarm_b.reload = 1;
-	 alarm_b.task_id = TASK_D_ID;
-	 alarm_list[1] = alarm_b;
-	 */
 	//Mailboxes
 	CreateMailBox(0, TASK_B_ID, TASK_A_ID);
 	CreateMailBox(1, TASK_A_ID, TASK_C_ID);
@@ -128,9 +111,10 @@ void Push_Btn_SW3(void) {
 }
 
 void PORTA_IRQHandler() {
-	//OS_save_context();
+	OS_save_context();
 	PORTA_PCR4 &= ~(0<<24);
 	RGB(0, 1, 0);
+	ActivateTaskIRQ(2);
 }
 
 void PORTC_IRQHandler() {

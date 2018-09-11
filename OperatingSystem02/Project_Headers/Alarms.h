@@ -38,7 +38,7 @@ void Alarms_Disable(void);
 extern void set_pc_sp_lr(uint32_t pc, uint32_t sp, uint32_t lr);
 extern void pop_r7_pc(void);
 extern void set_sp(uint32_t sp);
-extern uint32_t finish_isr(uint32_t isr_return, uint32_t isr_sp);
+extern uint32_t finish_isr2(uint32_t isr_return, uint32_t isr_sp, uint32_t scheduler_rd);
 
 #define DecrementAlarmsTicks(void) {\
 	uint32_t lr = LR_c;\
@@ -59,7 +59,8 @@ extern uint32_t finish_isr(uint32_t isr_return, uint32_t isr_sp);
 		}\
 	}\
 	if(AlarmActivated){\
-		alarm_task_context_sp = finish_isr(PC_c, alarm_task_context_sp);\
+		interrumped_task_lr_addr = get_task_return_dir(alarm_task_context_sp);\
+		interrupted_task_sp_addr = finish_isr2(PC_c, alarm_task_context_sp, alarm_return_lr);\
 	}\
 }\
 

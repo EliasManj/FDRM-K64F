@@ -26,10 +26,13 @@ C_SRCS += \
 S_SRCS += \
 ../Sources/clean_stack_from_chaintask.s \
 ../Sources/finish_isr.s \
+../Sources/finish_isr2.s \
+../Sources/get_task_return_dir.s \
 ../Sources/jump_to_os_loop.s \
 ../Sources/pop_r7_pc.s \
 ../Sources/pop_twice.s \
 ../Sources/recover_context.s \
+../Sources/recover_context2.s \
 ../Sources/restore_context.s \
 ../Sources/set_pc_sp.s \
 ../Sources/set_pc_sp_lr.s \
@@ -40,10 +43,13 @@ S_SRCS += \
 S_SRCS_QUOTED += \
 "../Sources/clean_stack_from_chaintask.s" \
 "../Sources/finish_isr.s" \
+"../Sources/finish_isr2.s" \
+"../Sources/get_task_return_dir.s" \
 "../Sources/jump_to_os_loop.s" \
 "../Sources/pop_r7_pc.s" \
 "../Sources/pop_twice.s" \
 "../Sources/recover_context.s" \
+"../Sources/recover_context2.s" \
 "../Sources/restore_context.s" \
 "../Sources/set_pc_sp.s" \
 "../Sources/set_pc_sp_lr.s" \
@@ -54,10 +60,13 @@ S_SRCS_QUOTED += \
 S_DEPS_QUOTED += \
 "./Sources/clean_stack_from_chaintask.d" \
 "./Sources/finish_isr.d" \
+"./Sources/finish_isr2.d" \
+"./Sources/get_task_return_dir.d" \
 "./Sources/jump_to_os_loop.d" \
 "./Sources/pop_r7_pc.d" \
 "./Sources/pop_twice.d" \
 "./Sources/recover_context.d" \
+"./Sources/recover_context2.d" \
 "./Sources/restore_context.d" \
 "./Sources/set_pc_sp.d" \
 "./Sources/set_pc_sp_lr.d" \
@@ -74,11 +83,14 @@ OBJS += \
 ./Sources/User.o \
 ./Sources/clean_stack_from_chaintask.o \
 ./Sources/finish_isr.o \
+./Sources/finish_isr2.o \
+./Sources/get_task_return_dir.o \
 ./Sources/jump_to_os_loop.o \
 ./Sources/main.o \
 ./Sources/pop_r7_pc.o \
 ./Sources/pop_twice.o \
 ./Sources/recover_context.o \
+./Sources/recover_context2.o \
 ./Sources/restore_context.o \
 ./Sources/set_pc_sp.o \
 ./Sources/set_pc_sp_lr.o \
@@ -98,10 +110,13 @@ C_DEPS += \
 S_DEPS += \
 ./Sources/clean_stack_from_chaintask.d \
 ./Sources/finish_isr.d \
+./Sources/finish_isr2.d \
+./Sources/get_task_return_dir.d \
 ./Sources/jump_to_os_loop.d \
 ./Sources/pop_r7_pc.d \
 ./Sources/pop_twice.d \
 ./Sources/recover_context.d \
+./Sources/recover_context2.d \
 ./Sources/restore_context.d \
 ./Sources/set_pc_sp.d \
 ./Sources/set_pc_sp_lr.d \
@@ -118,11 +133,14 @@ OBJS_QUOTED += \
 "./Sources/User.o" \
 "./Sources/clean_stack_from_chaintask.o" \
 "./Sources/finish_isr.o" \
+"./Sources/finish_isr2.o" \
+"./Sources/get_task_return_dir.o" \
 "./Sources/jump_to_os_loop.o" \
 "./Sources/main.o" \
 "./Sources/pop_r7_pc.o" \
 "./Sources/pop_twice.o" \
 "./Sources/recover_context.o" \
+"./Sources/recover_context2.o" \
 "./Sources/restore_context.o" \
 "./Sources/set_pc_sp.o" \
 "./Sources/set_pc_sp_lr.o" \
@@ -148,11 +166,14 @@ OBJS_OS_FORMAT += \
 ./Sources/User.o \
 ./Sources/clean_stack_from_chaintask.o \
 ./Sources/finish_isr.o \
+./Sources/finish_isr2.o \
+./Sources/get_task_return_dir.o \
 ./Sources/jump_to_os_loop.o \
 ./Sources/main.o \
 ./Sources/pop_r7_pc.o \
 ./Sources/pop_twice.o \
 ./Sources/recover_context.o \
+./Sources/recover_context2.o \
 ./Sources/restore_context.o \
 ./Sources/set_pc_sp.o \
 ./Sources/set_pc_sp_lr.o \
@@ -226,9 +247,25 @@ Sources/finish_isr.o: ../Sources/finish_isr.s
 	@echo 'Finished building: $<'
 	@echo ' '
 
-Sources/jump_to_os_loop.o: ../Sources/jump_to_os_loop.s
+Sources/finish_isr2.o: ../Sources/finish_isr2.s
 	@echo 'Building file: $<'
 	@echo 'Executing target #9 $<'
+	@echo 'Invoking: ARM Ltd Windows GCC Assembler'
+	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/finish_isr2.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/finish_isr2.o"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+Sources/get_task_return_dir.o: ../Sources/get_task_return_dir.s
+	@echo 'Building file: $<'
+	@echo 'Executing target #10 $<'
+	@echo 'Invoking: ARM Ltd Windows GCC Assembler'
+	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/get_task_return_dir.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/get_task_return_dir.o"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+Sources/jump_to_os_loop.o: ../Sources/jump_to_os_loop.s
+	@echo 'Building file: $<'
+	@echo 'Executing target #11 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC Assembler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/jump_to_os_loop.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/jump_to_os_loop.o"
 	@echo 'Finished building: $<'
@@ -236,7 +273,7 @@ Sources/jump_to_os_loop.o: ../Sources/jump_to_os_loop.s
 
 Sources/main.o: ../Sources/main.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #10 $<'
+	@echo 'Executing target #12 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC C Compiler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/main.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/main.o"
 	@echo 'Finished building: $<'
@@ -244,7 +281,7 @@ Sources/main.o: ../Sources/main.c
 
 Sources/pop_r7_pc.o: ../Sources/pop_r7_pc.s
 	@echo 'Building file: $<'
-	@echo 'Executing target #11 $<'
+	@echo 'Executing target #13 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC Assembler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/pop_r7_pc.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/pop_r7_pc.o"
 	@echo 'Finished building: $<'
@@ -252,7 +289,7 @@ Sources/pop_r7_pc.o: ../Sources/pop_r7_pc.s
 
 Sources/pop_twice.o: ../Sources/pop_twice.s
 	@echo 'Building file: $<'
-	@echo 'Executing target #12 $<'
+	@echo 'Executing target #14 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC Assembler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/pop_twice.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/pop_twice.o"
 	@echo 'Finished building: $<'
@@ -260,15 +297,23 @@ Sources/pop_twice.o: ../Sources/pop_twice.s
 
 Sources/recover_context.o: ../Sources/recover_context.s
 	@echo 'Building file: $<'
-	@echo 'Executing target #13 $<'
+	@echo 'Executing target #15 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC Assembler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/recover_context.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/recover_context.o"
 	@echo 'Finished building: $<'
 	@echo ' '
 
+Sources/recover_context2.o: ../Sources/recover_context2.s
+	@echo 'Building file: $<'
+	@echo 'Executing target #16 $<'
+	@echo 'Invoking: ARM Ltd Windows GCC Assembler'
+	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/recover_context2.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/recover_context2.o"
+	@echo 'Finished building: $<'
+	@echo ' '
+
 Sources/restore_context.o: ../Sources/restore_context.s
 	@echo 'Building file: $<'
-	@echo 'Executing target #14 $<'
+	@echo 'Executing target #17 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC Assembler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/restore_context.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/restore_context.o"
 	@echo 'Finished building: $<'
@@ -276,7 +321,7 @@ Sources/restore_context.o: ../Sources/restore_context.s
 
 Sources/set_pc_sp.o: ../Sources/set_pc_sp.s
 	@echo 'Building file: $<'
-	@echo 'Executing target #15 $<'
+	@echo 'Executing target #18 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC Assembler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/set_pc_sp.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/set_pc_sp.o"
 	@echo 'Finished building: $<'
@@ -284,7 +329,7 @@ Sources/set_pc_sp.o: ../Sources/set_pc_sp.s
 
 Sources/set_pc_sp_lr.o: ../Sources/set_pc_sp_lr.s
 	@echo 'Building file: $<'
-	@echo 'Executing target #16 $<'
+	@echo 'Executing target #19 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC Assembler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/set_pc_sp_lr.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/set_pc_sp_lr.o"
 	@echo 'Finished building: $<'
@@ -292,7 +337,7 @@ Sources/set_pc_sp_lr.o: ../Sources/set_pc_sp_lr.s
 
 Sources/set_sp.o: ../Sources/set_sp.s
 	@echo 'Building file: $<'
-	@echo 'Executing target #17 $<'
+	@echo 'Executing target #20 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC Assembler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/set_sp.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/set_sp.o"
 	@echo 'Finished building: $<'
@@ -300,7 +345,7 @@ Sources/set_sp.o: ../Sources/set_sp.s
 
 Sources/test.o: ../Sources/test.s
 	@echo 'Building file: $<'
-	@echo 'Executing target #18 $<'
+	@echo 'Executing target #21 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC Assembler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/test.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/test.o"
 	@echo 'Finished building: $<'
@@ -308,7 +353,7 @@ Sources/test.o: ../Sources/test.s
 
 Sources/test2.o: ../Sources/test2.s
 	@echo 'Building file: $<'
-	@echo 'Executing target #19 $<'
+	@echo 'Executing target #22 $<'
 	@echo 'Invoking: ARM Ltd Windows GCC Assembler'
 	"$(ARMSourceryDirEnv)/arm-none-eabi-gcc" "$<" @"Sources/test2.args" -MMD -MP -MF"$(@:%.o=%.d)" -o"Sources/test2.o"
 	@echo 'Finished building: $<'

@@ -18,7 +18,7 @@ extern void restore_context(uint32_t sp, uint32_t lr);
 extern void test();
 extern void test2();
 
-__attribute__( ( always_inline ))          __STATIC_INLINE uint32_t __get_LR(void) {
+__attribute__( ( always_inline ))             __STATIC_INLINE uint32_t __get_LR(void) {
 	register uint32_t result;
 
 	__ASM volatile ("MOV %0, LR\n" : "=r" (result) );
@@ -206,52 +206,50 @@ void LPTimer_Init(void) {
 
 void RunNextTaskAlarm(void) {
 	if (!start) {
-
+		alarm_return_lr = PC_c - 0x18;
 	} else {
-		task_incomplete_rd = recover_context(alarm_task_context_sp,
-				interrupted_task_sp_addr);
+		task_incomplete_rd = recover_context2(alarm_task_context_sp,
+				interrumped_task_lr_addr, interrupted_task_sp_addr);
 		if (CheckNextTask()) {
 			if (runningTask.label == 'X') {
 				runningTask = nextTask;
 				RunTask();
 			} else if (nextTask.priority >= runningTask.priority) {
 				runningTask.return_direction = task_incomplete_rd + 1;
-				runningTask.return_sp = alarm_task_context_sp - 0x50;
+				runningTask.return_sp = interrupted_task_sp_addr - 0x50;
 				runningTask.state = READY;
 				Queue_Add(ready_queue, runningTask);
 				runningTask = nextTask;
 				RunTask();
 			} else {
-				//Case when a task activated another task that has lower priority so the current task continues
 				Queue_Add(ready_queue, nextTask);
-				//runningTask.return_direction = a;
-				//set_lr_sp(runningTask.return_direction, sp);
+				runningTask.return_direction = task_incomplete_rd + 1;
+				runningTask.return_sp = interrupted_task_sp_addr - 0x50;
+				RunTask();
 			}
 		}
 	}
 }
 
 void RunNextTaskIRQ(void) {
-	if (CheckNextTask()) {
-		if (runningTask.label == 'X') {
-			runningTask = nextTask;
-			RunTask();
-		} else if (nextTask.priority > runningTask.priority) {
-			runningTask.state = READY;
-			runningTask.context_required = 1;
-			Queue_Add(ready_queue, runningTask);
-			runningTask = nextTask;
-			RunTask();
-		} else {
-			//Case when a task activated another task that has lower priority so the current task continues
-			Queue_Add(ready_queue, nextTask);
-			//runningTask.return_direction = a;
-		}
+	if (runningTask.label == 'X') {
+		runningTask = nextTask;
+		RunTask();
+	} else if (nextTask.priority > runningTask.priority) {
+		runningTask.state = READY;
+		runningTask.context_required = 1;
+		Queue_Add(ready_queue, runningTask);
+		runningTask = nextTask;
+		RunTask();
+	} else {
+		//Case when a task activated another task that has lower priority so the current task continues
+		Queue_Add(ready_queue, nextTask);
+		//runningTask.return_direction = a;
 	}
 }
 
 void move_current_task_to_wait(void) {
-	runningTask.return_direction = task_incomplete_rd;
+	runningTask.return_direction = task_incomplete_rd-2;
 	runningTask.return_sp = sp;
 	runningTask.state = WAIT;
 	Queue_Add(wait_queue, runningTask);

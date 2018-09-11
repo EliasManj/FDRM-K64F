@@ -36,6 +36,8 @@ uint32_t alarm_task_context_sp_addr;
 uint32_t *interrupted_task_sp_pointer;
 uint32_t interrupted_task_sp_addr;
 uint8_t start;
+uint32_t alarm_return_lr;
+uint32_t interrumped_task_lr_addr;
 
 register unsigned long PC_c __asm("pc");
 register unsigned long LR_c __asm("lr");
@@ -66,7 +68,7 @@ void OS_save_context_alarm(void);
 extern void jump_to_os_loop(uint32_t pc, uint32_t);
 extern void pop_twice();
 extern void clean_stack_from_chaintask();
-extern uint32_t recover_context(uint32_t interrumped_task_sp, uint32_t memory_addr);
+extern uint32_t recover_context2(alarm_task_context_sp,interrumped_task_lr_addr,interrupted_task_sp_addr);
 void RunNextTaskAlarm(void);
 void move_current_task_to_wait(void);
 void move_waiting_task_to_ready(uint32_t consumer_id);
