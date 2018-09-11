@@ -7,6 +7,7 @@ set_pc_sp:
 	mov 	r7, r1
 	add		r7, r7, #0x50
 	cpy 	sp,r7   
+	cpy 	lr, r0
 	sub		r0, r0, #1
 	cpy		pc, r0
 	.fnend

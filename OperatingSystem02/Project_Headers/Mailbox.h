@@ -26,7 +26,7 @@ MailboxObj mailbox1;
 MailboxObj mailbox2;
 
 
-int8_t WriteToMailbox(uint32_t mailbox_id, uint32_t data);
+int32_t WriteToMailbox(uint32_t mailbox_id, uint32_t data);
 int32_t ReadFromMailbox(uint32_t mailbox_id, uint32_t *placeholder);
 int8_t CreateMailBox(uint32_t mailbox_id, uint32_t producer_id, uint32_t consumer_id);
 int32_t *Allocate(void);

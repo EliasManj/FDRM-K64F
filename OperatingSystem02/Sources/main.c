@@ -84,7 +84,7 @@ int main(void) {
 	alarm_list[1].task_id = TASK_D_ID;
 	//Mailboxes
 	CreateMailBox(0, TASK_B_ID, TASK_A_ID);
-	CreateMailBox(1, TASK_A_ID, TASK_C_ID);
+	CreateMailBox(1, TASK_A_ID, TASK_B_ID);
 	CreateMailBox(2, TASK_D_ID, TASK_E_ID);
 	//Interrupts
 	RGB_Init();

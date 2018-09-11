@@ -13,7 +13,7 @@
 #define __ASM __asm /*!< asm keyword for GNU Compiler */ 
 #define __INLINE inline /*!< inline keyword for GNU Compiler */ 
 #define __STATIC_INLINE static inline 
-extern void set_pc_sp(uint32_t lr, uint32_t sp);
+extern void set_pc_sp(uint32_t pc, uint32_t sp);
 extern void restore_context(uint32_t sp, uint32_t lr);
 extern void test();
 extern void test2();
@@ -101,6 +101,8 @@ void TerminateTask(void) {
 	runningTask = get_empty_TASK();
 	if (CheckNextTask()) {
 		RunNextTask();
+	} else {
+		set_pc_sp(os_loop_pc, os_loop_sp-0x050);
 	}
 }
 
@@ -143,7 +145,7 @@ void OS_init(TASK *tasks, int size) {
 
 void OS_loop(void) {
 	os_loop_sp = SP_c;
-	os_loop_pc = PC_c;
+	os_loop_pc = PC_c+0x0C;
 	do {
 		if (CheckNextTask()) {
 			RunNextTask();
