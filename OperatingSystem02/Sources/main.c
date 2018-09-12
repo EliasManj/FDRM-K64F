@@ -85,7 +85,7 @@ int main(void) {
 	//Mailboxes
 	CreateMailBox(0, TASK_B_ID, TASK_A_ID);
 	CreateMailBox(1, TASK_A_ID, TASK_B_ID);
-	CreateMailBox(2, TASK_D_ID, TASK_E_ID);
+	CreateMailBox(2, TASK_C_ID, TASK_A_ID);
 	//Interrupts
 	RGB_Init();
 	Push_Btn_SW2();
