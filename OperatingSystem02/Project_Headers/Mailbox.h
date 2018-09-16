@@ -9,6 +9,7 @@
 #define MAILBOX_H_
 
 #define MAILBOX_LIST_SIZE 10
+#define Double_mb_write_offset 0x05
 
 struct Mailbox {
 	volatile int32_t *data;
@@ -16,6 +17,7 @@ struct Mailbox {
 	volatile uint32_t producer_id;
 	volatile uint8_t has_data;
 	volatile uint8_t consumer_waiting;
+	volatile uint8_t producer_waiting;
 };
 typedef struct Mailbox MailboxObj;
 uint16_t mailbox_n;

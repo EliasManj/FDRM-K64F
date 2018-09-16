@@ -18,7 +18,7 @@ extern void set_lr(uint32_t lr);
 
 int main(void) {
 	//TASK A
-	task_a.priority = 2;
+	task_a.priority = 3;
 	task_a.autostart = 1;
 	task_a.return_direction = 0;
 	task_a.state = 0;
@@ -27,8 +27,8 @@ int main(void) {
 	task_a.id = 0;
 	task_a.multiplicity = 0;
 	//TASK B
-	task_b.priority = 3;
-	task_b.autostart = 0;
+	task_b.priority = 2;
+	task_b.autostart = 1;
 	task_b.return_direction = 0;
 	task_b.state = 0;
 	task_b.ap_task_init = &TASK_B;
@@ -36,8 +36,8 @@ int main(void) {
 	task_b.id = 1;
 	task_b.multiplicity = 0;
 	//TASK_C
-	task_c.priority = 4;
-	task_c.autostart = 0;
+	task_c.priority = 1;
+	task_c.autostart = 1;
 	task_c.return_direction = 0;
 	task_c.state = 0;
 	task_c.ap_task_init = &TASK_C;
@@ -45,8 +45,8 @@ int main(void) {
 	task_c.id = 2;
 	task_c.multiplicity = 0;
 	//TASK_D
-	task_d.priority = 1;
-	task_d.autostart = 0;
+	task_d.priority = 5;
+	task_d.autostart = 1;
 	task_d.return_direction = 0;
 	task_d.state = 0;
 	task_d.ap_task_init = &TASK_D;
@@ -54,8 +54,8 @@ int main(void) {
 	task_d.id = 3;
 	task_d.multiplicity = 0;
 	//TASK_E
-	task_e.priority = 0;
-	task_e.autostart = 0;
+	task_e.priority = 4;
+	task_e.autostart = 1;
 	task_e.return_direction = 0;
 	task_e.state = 0;
 	task_e.ap_task_init = &TASK_E;
@@ -83,9 +83,10 @@ int main(void) {
 	alarm_list[1].reload = 0;
 	alarm_list[1].task_id = TASK_D_ID;
 	//Mailboxes
-	CreateMailBox(0, TASK_B_ID, TASK_A_ID);
-	CreateMailBox(1, TASK_A_ID, TASK_B_ID);
-	CreateMailBox(2, TASK_C_ID, TASK_A_ID);
+	CreateMailBox(0, TASK_D_ID, TASK_E_ID);
+	CreateMailBox(1, TASK_B_ID, TASK_A_ID);
+	CreateMailBox(2, TASK_B_ID, TASK_C_ID);
+	CreateMailBox(3, TASK_A_ID, TASK_B_ID);
 	//Interrupts
 	RGB_Init();
 	Push_Btn_SW2();

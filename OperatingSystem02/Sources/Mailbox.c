@@ -15,12 +15,15 @@ int32_t WriteToMailbox(uint32_t mailbox_id, uint32_t data) {
 	id = getRunningTaskID();
 	if (id == mailbox_list[mailbox_id].producer_id) {
 		if (mailbox_list[mailbox_id].has_data) {
+			task_incomplete_rd = task_incomplete_rd-Double_mb_write_offset;  
+			mailbox_list[mailbox_id].producer_waiting = 1;
 			move_current_task_to_wait();
 		} else {
 			*mailbox_list[mailbox_id].data = data;
 			mailbox_list[mailbox_id].has_data = 1;
 			if (mailbox_list[mailbox_id].consumer_waiting) {
-				move_waiting_task_to_ready(mailbox_list[mailbox_id].consumer_id);
+				move_waiting_task_to_ready(
+						mailbox_list[mailbox_id].consumer_id);
 			}
 		}
 	} else {
@@ -46,6 +49,9 @@ int32_t ReadFromMailbox(uint32_t mailbox_id, uint32_t *placeholder) {
 			*placeholder = *mailbox_list[mailbox_id].data;
 			mailbox_list[mailbox_id].has_data = 0;
 			mailbox_list[mailbox_id].consumer_waiting = 0;
+			if (mailbox_list[mailbox_id].producer_waiting) {
+				move_waiting_task_to_ready(mailbox_list[mailbox_id].producer_id);
+			}
 		} else {
 			return 1;
 		}
