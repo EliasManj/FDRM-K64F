@@ -9,8 +9,6 @@
 "./Sources/restore_context.o"
 "./Sources/recover_context2.o"
 "./Sources/recover_context.o"
-"./Sources/pop_twice.o"
-"./Sources/pop_r7_pc.o"
 "./Sources/main.o"
 "./Sources/jump_to_os_loop.o"
 "./Sources/get_task_return_dir.o"
