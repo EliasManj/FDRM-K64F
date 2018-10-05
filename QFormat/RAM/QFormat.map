@@ -126,8 +126,8 @@ LOAD ./Project_Settings/Startup_Code/kinetis_sysinit.o
 LOAD ./Project_Settings/Startup_Code/__arm_start.o
 LOAD ./Project_Settings/Startup_Code/__arm_end.o
 LOAD ./Sources/main.o
-                0x1fff050c                __pformatter = __pformatter_
-                [0x1fff0904]                __sformatter = __sformatter
+                0x1fff0544                __pformatter = __pformatter_
+                [0x1fff093c]                __sformatter = __sformatter
 START GROUP
 LOAD C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a
 LOAD C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libm.a
@@ -148,186 +148,186 @@ END GROUP
                 0x1fff0000                InterruptVector
                 0x1fff0198                . = ALIGN (0x4)
 
-.text           0x1fff0198     0x1358
+.text           0x1fff0198     0x1390
                 0x1fff0198                . = ALIGN (0x4)
  *(.text)
- .text          0x1fff0198       0x68 ./Sources/main.o
+ .text          0x1fff0198       0xa0 ./Sources/main.o
                 0x1fff0198                main
  *(.text*)
  .text.Default_Handler
-                0x1fff0200        0xc ./Project_Settings/Startup_Code/kinetis_sysinit.o
-                0x1fff0200                RTC_Alarm_IRQHandler
-                0x1fff0200                CAN0_Rx_Warning_IRQHandler
-                0x1fff0200                CAN0_Err_IRQHandler
-                0x1fff0200                I2C0_IRQHandler
-                0x1fff0200                HardFault_Handler
-                0x1fff0200                PDB_IRQHandler
-                0x1fff0200                SysTick_Handler
-                0x1fff0200                UART0_Status_IRQHandler
-                0x1fff0200                PendSV_Handler
-                0x1fff0200                NMI_Handler
-                0x1fff0200                I2C1_IRQHandler
-                0x1fff0200                UART3_Status_IRQHandler
-                0x1fff0200                DMA2_IRQHandler
-                0x1fff0200                PIT0_IRQHandler
-                0x1fff0200                Watchdog_IRQHandler
-                0x1fff0200                Bus_Fault_Handler
-                0x1fff0200                CMP2_IRQHandler
-                0x1fff0200                SWI_IRQHandler
-                0x1fff0200                ADC0_IRQHandler
-                0x1fff0200                ENET_MAC_Transmit_IRQHandler
-                0x1fff0200                I2S0_Tx_IRQHandler
-                0x1fff0200                CMT_IRQHandler
-                0x1fff0200                UART1_Status_IRQHandler
-                0x1fff0200                SPI1_IRQHandler
-                0x1fff0200                DMA9_IRQHandler
-                0x1fff0200                DMA14_IRQHandler
-                0x1fff0200                CMP1_IRQHandler
-                0x1fff0200                PORTD_IRQHandler
-                0x1fff0200                PORTB_IRQHandler
-                0x1fff0200                UART4_ERR_IRQHandler
-                0x1fff0200                ADC1_IRQHandler
-                0x1fff0200                I2C2_IRQHandler
-                0x1fff0200                PIT2_IRQHandler
-                0x1fff0200                I2S0_Rx_IRQHandler
-                0x1fff0200                LPTimer_IRQHandler
-                0x1fff0200                DMA5_IRQHandler
-                0x1fff0200                FTM1_IRQHandler
-                0x1fff0200                UART3_ERR_IRQHandler
-                0x1fff0200                PIT3_IRQHandler
-                0x1fff0200                SDHC_IRQHandler
-                0x1fff0200                RTC_Seconds_IRQHandler
-                0x1fff0200                MCG_IRQHandler
-                0x1fff0200                ENET_MAC_Timer_IRQHandler
-                0x1fff0200                UART2_ERR_IRQHandler
-                0x1fff0200                DMA11_IRQHandler
-                0x1fff0200                Tamper_Drylce_IRQHandler
-                0x1fff0200                USB_OTG_IRQHandler
-                0x1fff0200                Read_Collision_IRQHandler
-                0x1fff0200                Default_Handler
-                0x1fff0200                UART4_Status_IRQHandler
-                0x1fff0200                DMA7_IRQHandler
-                0x1fff0200                LLW_IRQHandler
-                0x1fff0200                SPI2_IRQHandler
-                0x1fff0200                USB_Charger_Detect_IRQHandler
-                0x1fff0200                SVC_Handler
-                0x1fff0200                Usage_Fault_Handler
-                0x1fff0200                DMA13_IRQHandler
-                0x1fff0200                DMA3_IRQHandler
-                0x1fff0200                UART0_LON_IRQHandler
-                0x1fff0200                RNG_IRQHandler
-                0x1fff0200                DMA0_IRQHandler
-                0x1fff0200                DMA15_IRQHandler
-                0x1fff0200                DAC0_IRQHandler
-                0x1fff0200                ENET_MAC_Error_IRQHandler
-                0x1fff0200                DMA4_IRQHandler
-                0x1fff0200                PIT1_IRQHandler
-                0x1fff0200                UART0_ERR_IRQHandler
-                0x1fff0200                DMA_Error_IRQHandler
-                0x1fff0200                LVD_LVW_IRQHandler
-                0x1fff0200                SPI0_IRQHandler
-                0x1fff0200                CAN0_Tx_WarningIRQHandler
-                0x1fff0200                FTM0_IRQHandler
-                0x1fff0200                PORTA_IRQHandler
-                0x1fff0200                DAC1_IRQHandler
-                0x1fff0200                MCM_IRQHandler
-                0x1fff0200                DMA12_IRQHandler
-                0x1fff0200                Mem_Manage_Fault_Handler
-                0x1fff0200                FTFL_IRQHandler
-                0x1fff0200                CAN0_Bus_Off_IRQHandler
-                0x1fff0200                FTM3_IRQHandler
-                0x1fff0200                PORTE_IRQHandler
-                0x1fff0200                CAN0_Message_buffer_IRQHandler
-                0x1fff0200                FTM2_IRQHandler
-                0x1fff0200                DMA8_IRQHandler
-                0x1fff0200                DMA10_IRQHandler
-                0x1fff0200                CAN0_Wake_Up_IRQHandler
-                0x1fff0200                DebugMonitor_Handler
-                0x1fff0200                UART1_ERR_IRQHandler
-                0x1fff0200                CMP0_IRQHandler
-                0x1fff0200                ENET_MAC_Receive_IRQHandler
-                0x1fff0200                PORTC_IRQHandler
-                0x1fff0200                DMA6_IRQHandler
-                0x1fff0200                UART2_Status_IRQHandler
-                0x1fff0200                DMA1_IRQHandler
+                0x1fff0238        0xc ./Project_Settings/Startup_Code/kinetis_sysinit.o
+                0x1fff0238                RTC_Alarm_IRQHandler
+                0x1fff0238                CAN0_Rx_Warning_IRQHandler
+                0x1fff0238                CAN0_Err_IRQHandler
+                0x1fff0238                I2C0_IRQHandler
+                0x1fff0238                HardFault_Handler
+                0x1fff0238                PDB_IRQHandler
+                0x1fff0238                SysTick_Handler
+                0x1fff0238                UART0_Status_IRQHandler
+                0x1fff0238                PendSV_Handler
+                0x1fff0238                NMI_Handler
+                0x1fff0238                I2C1_IRQHandler
+                0x1fff0238                UART3_Status_IRQHandler
+                0x1fff0238                DMA2_IRQHandler
+                0x1fff0238                PIT0_IRQHandler
+                0x1fff0238                Watchdog_IRQHandler
+                0x1fff0238                Bus_Fault_Handler
+                0x1fff0238                CMP2_IRQHandler
+                0x1fff0238                SWI_IRQHandler
+                0x1fff0238                ADC0_IRQHandler
+                0x1fff0238                ENET_MAC_Transmit_IRQHandler
+                0x1fff0238                I2S0_Tx_IRQHandler
+                0x1fff0238                CMT_IRQHandler
+                0x1fff0238                UART1_Status_IRQHandler
+                0x1fff0238                SPI1_IRQHandler
+                0x1fff0238                DMA9_IRQHandler
+                0x1fff0238                DMA14_IRQHandler
+                0x1fff0238                CMP1_IRQHandler
+                0x1fff0238                PORTD_IRQHandler
+                0x1fff0238                PORTB_IRQHandler
+                0x1fff0238                UART4_ERR_IRQHandler
+                0x1fff0238                ADC1_IRQHandler
+                0x1fff0238                I2C2_IRQHandler
+                0x1fff0238                PIT2_IRQHandler
+                0x1fff0238                I2S0_Rx_IRQHandler
+                0x1fff0238                LPTimer_IRQHandler
+                0x1fff0238                DMA5_IRQHandler
+                0x1fff0238                FTM1_IRQHandler
+                0x1fff0238                UART3_ERR_IRQHandler
+                0x1fff0238                PIT3_IRQHandler
+                0x1fff0238                SDHC_IRQHandler
+                0x1fff0238                RTC_Seconds_IRQHandler
+                0x1fff0238                MCG_IRQHandler
+                0x1fff0238                ENET_MAC_Timer_IRQHandler
+                0x1fff0238                UART2_ERR_IRQHandler
+                0x1fff0238                DMA11_IRQHandler
+                0x1fff0238                Tamper_Drylce_IRQHandler
+                0x1fff0238                USB_OTG_IRQHandler
+                0x1fff0238                Read_Collision_IRQHandler
+                0x1fff0238                Default_Handler
+                0x1fff0238                UART4_Status_IRQHandler
+                0x1fff0238                DMA7_IRQHandler
+                0x1fff0238                LLW_IRQHandler
+                0x1fff0238                SPI2_IRQHandler
+                0x1fff0238                USB_Charger_Detect_IRQHandler
+                0x1fff0238                SVC_Handler
+                0x1fff0238                Usage_Fault_Handler
+                0x1fff0238                DMA13_IRQHandler
+                0x1fff0238                DMA3_IRQHandler
+                0x1fff0238                UART0_LON_IRQHandler
+                0x1fff0238                RNG_IRQHandler
+                0x1fff0238                DMA0_IRQHandler
+                0x1fff0238                DMA15_IRQHandler
+                0x1fff0238                DAC0_IRQHandler
+                0x1fff0238                ENET_MAC_Error_IRQHandler
+                0x1fff0238                DMA4_IRQHandler
+                0x1fff0238                PIT1_IRQHandler
+                0x1fff0238                UART0_ERR_IRQHandler
+                0x1fff0238                DMA_Error_IRQHandler
+                0x1fff0238                LVD_LVW_IRQHandler
+                0x1fff0238                SPI0_IRQHandler
+                0x1fff0238                CAN0_Tx_WarningIRQHandler
+                0x1fff0238                FTM0_IRQHandler
+                0x1fff0238                PORTA_IRQHandler
+                0x1fff0238                DAC1_IRQHandler
+                0x1fff0238                MCM_IRQHandler
+                0x1fff0238                DMA12_IRQHandler
+                0x1fff0238                Mem_Manage_Fault_Handler
+                0x1fff0238                FTFL_IRQHandler
+                0x1fff0238                CAN0_Bus_Off_IRQHandler
+                0x1fff0238                FTM3_IRQHandler
+                0x1fff0238                PORTE_IRQHandler
+                0x1fff0238                CAN0_Message_buffer_IRQHandler
+                0x1fff0238                FTM2_IRQHandler
+                0x1fff0238                DMA8_IRQHandler
+                0x1fff0238                DMA10_IRQHandler
+                0x1fff0238                CAN0_Wake_Up_IRQHandler
+                0x1fff0238                DebugMonitor_Handler
+                0x1fff0238                UART1_ERR_IRQHandler
+                0x1fff0238                CMP0_IRQHandler
+                0x1fff0238                ENET_MAC_Receive_IRQHandler
+                0x1fff0238                PORTC_IRQHandler
+                0x1fff0238                DMA6_IRQHandler
+                0x1fff0238                UART2_Status_IRQHandler
+                0x1fff0238                DMA1_IRQHandler
  .text.__init_hardware
-                0x1fff020c       0x44 ./Project_Settings/Startup_Code/kinetis_sysinit.o
-                0x1fff020c                __init_hardware
+                0x1fff0244       0x44 ./Project_Settings/Startup_Code/kinetis_sysinit.o
+                0x1fff0244                __init_hardware
  .text.zero_fill_bss
-                0x1fff0250       0x2c ./Project_Settings/Startup_Code/__arm_start.o
+                0x1fff0288       0x2c ./Project_Settings/Startup_Code/__arm_start.o
  .text.__thumb_startup
-                0x1fff027c       0x34 ./Project_Settings/Startup_Code/__arm_start.o
-                0x1fff027c                __thumb_startup
+                0x1fff02b4       0x34 ./Project_Settings/Startup_Code/__arm_start.o
+                0x1fff02b4                __thumb_startup
  .text._ExitProcess
-                0x1fff02b0        0xc ./Project_Settings/Startup_Code/__arm_end.o
-                0x1fff02b0                _ExitProcess
- .text.exit     0x1fff02bc       0x38 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(exit.o)
-                0x1fff02bc                exit
- .text.memset   0x1fff02f4        0xc C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(memset.o)
-                0x1fff02f4                memset
+                0x1fff02e8        0xc ./Project_Settings/Startup_Code/__arm_end.o
+                0x1fff02e8                _ExitProcess
+ .text.exit     0x1fff02f4       0x38 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(exit.o)
+                0x1fff02f4                exit
+ .text.memset   0x1fff032c        0xc C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(memset.o)
+                0x1fff032c                memset
  .text.__fill_mem
-                0x1fff0300       0x76 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(__filll_mem.o)
-                0x1fff0300                __fill_mem
+                0x1fff0338       0x76 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(__filll_mem.o)
+                0x1fff0338                __fill_mem
  .text.long2str.isra.0
-                0x1fff0376      0x196 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(printformat_.o)
+                0x1fff03ae      0x196 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(printformat_.o)
  .text.__pformatter_
-                0x1fff050c      0x3f8 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(printformat_.o)
-                0x1fff050c                __pformatter_
+                0x1fff0544      0x3f8 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(printformat_.o)
+                0x1fff0544                __pformatter_
  .text.__sformatter
-                0x1fff0904      0x6f4 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(scanformat_.o)
-                0x1fff0904                __sformatter
- .text.isalpha  0x1fff0ff8       0x1c C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(ctype_aeabi.o)
-                0x1fff0ff8                isalpha
- .text.isspace  0x1fff1014       0x1c C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(ctype_aeabi.o)
-                0x1fff1014                isspace
- .text.toupper  0x1fff1030        0xc C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(ctype_aeabi.o)
-                0x1fff1030                toupper
+                0x1fff093c      0x6f4 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(scanformat_.o)
+                0x1fff093c                __sformatter
+ .text.isalpha  0x1fff1030       0x1c C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(ctype_aeabi.o)
+                0x1fff1030                isalpha
+ .text.isspace  0x1fff104c       0x1c C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(ctype_aeabi.o)
+                0x1fff104c                isspace
+ .text.toupper  0x1fff1068        0xc C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(ctype_aeabi.o)
+                0x1fff1068                toupper
  .text.__strtoul
-                0x1fff103c      0x214 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(__strtoul.o)
-                0x1fff103c                __strtoul
- .text.strchr   0x1fff1250       0x1a C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(strchr.o)
-                0x1fff1250                strchr
- .text.strlen   0x1fff126a       0x10 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(strlen.o)
-                0x1fff126a                strlen
- .text.memchr   0x1fff127a       0x18 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(memchr.o)
-                0x1fff127a                memchr
- *fill*         0x1fff1292        0x2 00
+                0x1fff1074      0x214 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(__strtoul.o)
+                0x1fff1074                __strtoul
+ .text.strchr   0x1fff1288       0x1a C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(strchr.o)
+                0x1fff1288                strchr
+ .text.strlen   0x1fff12a2       0x10 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(strlen.o)
+                0x1fff12a2                strlen
+ .text.memchr   0x1fff12b2       0x18 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(memchr.o)
+                0x1fff12b2                memchr
+ *fill*         0x1fff12ca        0x2 00
  .text.__init_cpp
-                0x1fff1294       0x4c C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\librt.a(gcc_ctor_dtor.o)
-                0x1fff1294                __init_cpp
+                0x1fff12cc       0x4c C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\librt.a(gcc_ctor_dtor.o)
+                0x1fff12cc                __init_cpp
  .text.__fini_cpp
-                0x1fff12e0       0x34 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\librt.a(gcc_ctor_dtor.o)
-                0x1fff12e0                __fini_cpp
+                0x1fff1318       0x34 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\librt.a(gcc_ctor_dtor.o)
+                0x1fff1318                __fini_cpp
  .text.__destroy_global_chain
-                0x1fff1314       0x18 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\librt.a(__arm_eabi_init.o)
-                0x1fff1314                __destroy_global_chain
+                0x1fff134c       0x18 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\librt.a(__arm_eabi_init.o)
+                0x1fff134c                __destroy_global_chain
  .text.__init_registers
-                0x1fff132c       0x24 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\librt.a(__arm_eabi_init.o)
-                0x1fff132c                __init_registers
+                0x1fff1364       0x24 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\librt.a(__arm_eabi_init.o)
+                0x1fff1364                __init_registers
  .text.__fp_init
-                0x1fff1350       0x1c C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\librt.a(__arm_eabi_init.o)
-                0x1fff1350                __fp_init
+                0x1fff1388       0x1c C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\librt.a(__arm_eabi_init.o)
+                0x1fff1388                __fp_init
  .text.__init_user
-                0x1fff136c        0x4 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\librt.a(__arm_eabi_init.o)
-                0x1fff136c                __init_user
+                0x1fff13a4        0x4 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\librt.a(__arm_eabi_init.o)
+                0x1fff13a4                __init_user
  .text.__copy_rom_section
-                0x1fff1370       0x44 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\librt.a(ROMCopy.o)
-                0x1fff1370                __copy_rom_section
+                0x1fff13a8       0x44 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\librt.a(ROMCopy.o)
+                0x1fff13a8                __copy_rom_section
  .text.__copy_rom_sections_to_ram
-                0x1fff13b4       0x30 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\librt.a(ROMCopy.o)
-                0x1fff13b4                __copy_rom_sections_to_ram
+                0x1fff13ec       0x30 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\librt.a(ROMCopy.o)
+                0x1fff13ec                __copy_rom_sections_to_ram
  *(.rodata)
- .rodata        0x1fff13e4        0x0 ./Sources/main.o
+ .rodata        0x1fff141c        0x0 ./Sources/main.o
  *(.rodata*)
  .rodata.str1.1
-                0x1fff13e4        0x1 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(printformat_.o)
+                0x1fff141c        0x1 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(printformat_.o)
  .rodata.CSWTCH.20
-                0x1fff13e5        0x5 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(printformat_.o)
+                0x1fff141d        0x5 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(printformat_.o)
  .rodata.CSWTCH.21
-                0x1fff13ea        0x5 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(printformat_.o)
+                0x1fff1422        0x5 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(printformat_.o)
  .rodata.__aeabi_ctype_table_C
-                0x1fff13ef      0x101 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(ctype_aeabi.o)
-                0x1fff13ef                __aeabi_ctype_table_C
+                0x1fff1427      0x101 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(ctype_aeabi.o)
+                0x1fff1427                __aeabi_ctype_table_C
  *(.glue_7)
  .glue_7        0x00000000        0x0 linker stubs
  *(.glue_7t)
@@ -335,61 +335,61 @@ END GROUP
  *(.eh_frame)
  *(.init)
  *(.fini)
-                0x1fff14f0                . = ALIGN (0x4)
-                0x1fff14f0                _etext = .
+                0x1fff1528                . = ALIGN (0x4)
+                0x1fff1528                _etext = .
 
-.vfp11_veneer   0x1fff14f0        0x0
+.vfp11_veneer   0x1fff1528        0x0
  .vfp11_veneer  0x00000000        0x0 linker stubs
 
-.v4_bx          0x1fff14f0        0x0
+.v4_bx          0x1fff1528        0x0
  .v4_bx         0x00000000        0x0 linker stubs
 
-.iplt           0x1fff14f0        0x0
+.iplt           0x1fff1528        0x0
  .iplt          0x00000000        0x0 ./Project_Settings/Startup_Code/kinetis_sysinit.o
 
-.rel.dyn        0x1fff14f0        0x0
+.rel.dyn        0x1fff1528        0x0
  .rel.iplt      0x00000000        0x0 ./Project_Settings/Startup_Code/kinetis_sysinit.o
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
 
-.ARM            0x1fff14f0        0x0
-                0x1fff14f0                __exidx_start = .
+.ARM            0x1fff1528        0x0
+                0x1fff1528                __exidx_start = .
  *(.ARM.exidx*)
-                0x1fff14f0                __exidx_end = .
+                0x1fff1528                __exidx_end = .
 
-.ctors          0x1fff14f0        0x0
-                0x1fff14f0                __CTOR_LIST__ = .
+.ctors          0x1fff1528        0x0
+                0x1fff1528                __CTOR_LIST__ = .
  *crtbegin.o(.ctors)
  *(EXCLUDE_FILE(*crtend.o) .ctors)
  *(SORT(.ctors.*))
  *(.ctors)
-                0x1fff14f0                __CTOR_END__ = .
+                0x1fff1528                __CTOR_END__ = .
 
-.dtors          0x1fff14f0        0x0
-                0x1fff14f0                __DTOR_LIST__ = .
+.dtors          0x1fff1528        0x0
+                0x1fff1528                __DTOR_LIST__ = .
  *crtbegin.o(.dtors)
  *(EXCLUDE_FILE(*crtend.o) .dtors)
  *(SORT(.dtors.*))
  *(.dtors)
-                0x1fff14f0                __DTOR_END__ = .
+                0x1fff1528                __DTOR_END__ = .
 
-.preinit_array  0x1fff14f0        0x0
-                0x1fff14f0                PROVIDE (__preinit_array_start, .)
+.preinit_array  0x1fff1528        0x0
+                0x1fff1528                PROVIDE (__preinit_array_start, .)
  *(.preinit_array*)
-                0x1fff14f0                PROVIDE (__preinit_array_end, .)
+                0x1fff1528                PROVIDE (__preinit_array_end, .)
 
-.init_array     0x1fff14f0        0x0
-                0x1fff14f0                PROVIDE (__init_array_start, .)
+.init_array     0x1fff1528        0x0
+                0x1fff1528                PROVIDE (__init_array_start, .)
  *(SORT(.init_array.*))
  *(.init_array*)
-                0x1fff14f0                PROVIDE (__init_array_end, .)
+                0x1fff1528                PROVIDE (__init_array_end, .)
 
-.fini_array     0x1fff14f0        0x0
-                0x1fff14f0                PROVIDE (__fini_array_start, .)
+.fini_array     0x1fff1528        0x0
+                0x1fff1528                PROVIDE (__fini_array_start, .)
  *(SORT(.fini_array.*))
  *(.fini_array*)
-                0x1fff14f0                PROVIDE (__fini_array_end, .)
+                0x1fff1528                PROVIDE (__fini_array_end, .)
 
 .data           0x20000000        0x0
                 0x20000000                . = ALIGN (0x4)
@@ -576,24 +576,24 @@ OUTPUT(QFormat.elf elf32-littlearm)
  .debug_macinfo
                 0x00065c64     0x352a ./Project_Settings/Startup_Code/__arm_end.o
 
-.debug_line     0x00000000     0x158c
+.debug_line     0x00000000     0x15a3
  .debug_line    0x00000000      0x212 ./Project_Settings/Startup_Code/kinetis_sysinit.o
  .debug_line    0x00000212      0x295 ./Project_Settings/Startup_Code/__arm_start.o
  .debug_line    0x000004a7      0x265 ./Project_Settings/Startup_Code/__arm_end.o
- .debug_line    0x0000070c       0x65 ./Sources/main.o
- .debug_line    0x00000771       0x94 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(exit.o)
- .debug_line    0x00000805       0x8f C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(memset.o)
- .debug_line    0x00000894       0xcd C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(__filll_mem.o)
- .debug_line    0x00000961      0x2b4 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(printformat_.o)
- .debug_line    0x00000c15      0x2df C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(scanformat_.o)
- .debug_line    0x00000ef4      0x1a9 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(ctype_aeabi.o)
- .debug_line    0x0000109d      0x11b C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(__strtoul.o)
- .debug_line    0x000011b8       0x7d C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(strchr.o)
- .debug_line    0x00001235       0x83 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(strlen.o)
- .debug_line    0x000012b8       0x9f C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(memchr.o)
- .debug_line    0x00001357       0x67 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\librt.a(gcc_ctor_dtor.o)
- .debug_line    0x000013be      0x125 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\librt.a(__arm_eabi_init.o)
- .debug_line    0x000014e3       0xa9 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\librt.a(ROMCopy.o)
+ .debug_line    0x0000070c       0x7c ./Sources/main.o
+ .debug_line    0x00000788       0x94 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(exit.o)
+ .debug_line    0x0000081c       0x8f C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(memset.o)
+ .debug_line    0x000008ab       0xcd C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(__filll_mem.o)
+ .debug_line    0x00000978      0x2b4 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(printformat_.o)
+ .debug_line    0x00000c2c      0x2df C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(scanformat_.o)
+ .debug_line    0x00000f0b      0x1a9 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(ctype_aeabi.o)
+ .debug_line    0x000010b4      0x11b C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(__strtoul.o)
+ .debug_line    0x000011cf       0x7d C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(strchr.o)
+ .debug_line    0x0000124c       0x83 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(strlen.o)
+ .debug_line    0x000012cf       0x9f C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\libc.a(memchr.o)
+ .debug_line    0x0000136e       0x67 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\librt.a(gcc_ctor_dtor.o)
+ .debug_line    0x000013d5      0x125 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\librt.a(__arm_eabi_init.o)
+ .debug_line    0x000014fa       0xa9 C:/Freescale/CW MCU v10.7/MCU/ARM_GCC_Support/ewl/lib/armv7e-m/fpu\librt.a(ROMCopy.o)
 
 .debug_str      0x00000000      0xbaa
  .debug_str     0x00000000      0x268 ./Project_Settings/Startup_Code/kinetis_sysinit.o

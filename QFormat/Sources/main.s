@@ -13,27 +13,51 @@
 	
 main:
 	push {r3, lr}
-	add	r3, sp, #4
+	add	r3, sp, #8
 	
-	@qaddition
-	ldr	r0, =0x00010000
-	ldr	r1, =0x00010000
-	qadd r2, r0, r1
-	ldr	r0, =0x00000240
-	ldr	r1, =0x000004E0
-	qadd r2, r0, r1
+	@qaddition CHECK
+	ldr	r0, =0x00000044	@4.25
+	ldr	r1, =0x00000088	@8.5
+	qadd r2, r0, r1	@4.25 + 8.5 = 12.75
+	qsub r3, r1, r0	@8.5 - 4.25 = 4.25
+	qsub r4, r0, r1	@4.25 - 8.5 = -4.25
+	ldr	r0, =0xffffffbc	@-4.25
+	qadd r2, r0, r1	@8.5+(-4.25)
 	
-	@Multiply 1.75(01.11)*(01.01)1.25
-	ldr	r0, =0x000001c0
-	ldr	r1, =0x00000140
-	mul r0, r0, r1	
+	@Need to change iq to 12
+	@Multiply 1.75(01.11)*(01.01)1.25 CHECK
+	ldr	r0, =0x00001400	@1.25
+	ldr	r1, =0x00001c00	@1.75
+	mul r0, r0, r1	@1.75*1.25
+	asr r0, r0, #iq
+	ldr	r0, =0x00001400	@1.25
+	ldr	r1, =0xfffff000	@-1
+	mul r0, r0, r1	@1.25*-1
+	asr r0, r0, #iq
+	ldr	r1, =0x00001c00	@1.75
+	mul r0, r1, r0 @1.75*-1.25
 	asr r0, r0, #iq
 	
-	@Divide 2(10.00)/.5(00.10)
-	ldr	r0, =0x00000200
-	ldr	r1, =0x00000080
+	@Need to change iq to 8
+	@Divide 2.0(10.10)/.5(00.10) CHECK
+	ldr	r0, =0x00000200 @2
+	ldr	r1, =0x00000080	@.5
+	lsl r0, r0, #iq		
+	sdiv r2, r0, r1		@2/.5
+	
+	ldr	r0, =0xfffffe00 @-2
+	lsl r0, r0, #iq
+	sdiv r2, r0, r1		@-2/.5
+	
+	ldr	r0, =0x00000100 @1
+	ldr	r1, =0x00000100	@1
 	lsl r0, r0, #iq
 	sdiv r2, r0, r1
+	
+	ldr	r0, =0x00000100 @1
+	ldr	r1, =0xffffff00	@-1
+	lsl r0, r0, #iq
+	sdiv r2, r0, r1		@-1/1
 	
 	@substract
 	ldr	r0, =0x80088000
