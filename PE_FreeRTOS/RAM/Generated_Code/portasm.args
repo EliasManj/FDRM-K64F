@@ -1,0 +1,12 @@
+-mcpu=cortex-m4
+-mthumb
+-mfloat-abi=hard
+-mfpu=fpv4-sp-d16
+-g3
+-gdwarf-2
+-gstrict-dwarf
+-x assembler-with-cpp
+-I"C:/Users/Elias g/FDRM-K64F/PE_FreeRTOS/Generated_Code"
+-Wall
+-c
+-fmessage-length=0
