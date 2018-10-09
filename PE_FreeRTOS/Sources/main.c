@@ -44,11 +44,12 @@
 /* User includes (#include below this line is not maintained by Processor Expert) */
 #include "RGB.h"
 #include "user_tasks.h"
+#include "SerialPorts.h"
+#include "PWM_timers.h"
 /* Funciton definitions */
 void user_main(void);
 void RGB_test(void);
 void LPTimer_Init(void);
-void vTimerCallback(TimerHandle_t xTimer);
 /*lint -save  -e970 Disable MISRA rule (6.3) checking. */
 int main(void)
 /*lint -restore Enable MISRA rule (6.3) checking. */
@@ -75,19 +76,14 @@ int main(void)
 } /*** End of main routine. DO NOT MODIFY THIS TEXT!!! ***/
 
 void user_main(void) {
-	TimerHandle_t xTimer;
 
 	RGB_test();
-
+	setGPIO_PortC();
+	timers_Init();
 	//xTaskCreate(vTask1, "Task 1", 200, NULL, 1, NULL);
 	//xTaskCreate(vTask2, "Task 2", 200, NULL, 1, NULL);
 
-	xTimer = xTimerCreate("Timer", 100, 1, (void *) 0, vTimerCallback);
-	if (xTimer != NULL) {
-		xTimerStart( xTimer, 0);
-	}
-
-	//LPTimer_Init();
+	//Push_Btn_SW2();
 }
 
 void LPTimer_Init(void) {
@@ -104,27 +100,6 @@ void RGB_test(void) {
 	RGB(1, 0, 0);
 	RGB(0, 1, 0);
 	RGB(0, 0, 1);
-}
-
-void vTimerCallback(TimerHandle_t xTimer) {
-	const uint32_t ulMaxExpiryCountBeforeStopping = 10;
-	uint32_t ulCount;
-	/* The number of times this timer has expired is saved as the timer's ID. Obtain the
-	 count. */
-	ulCount = (uint32_t) pvTimerGetTimerID(xTimer);
-	/* Increment the count, then test to see if the timer has expired
-	 ulMaxExpiryCountBeforeStopping yet. */
-	ulCount++;
-	/* If the timer has expired 10 times then stop it from running. */
-	if (ulCount >= ulMaxExpiryCountBeforeStopping) {
-		/* Do not use a block time if calling a timer API function from a timer callback
-		 function, as doing so could cause a deadlock! */
-		xTimerStop( xTimer, 0);
-	} else {
-		/* Store the incremented count back into the timer's ID field so it can be read back again
-		 the next time this software timer expires. */
-		vTimerSetTimerID(xTimer, (void *) ulCount);
-	}
 }
 
 /* END main */
