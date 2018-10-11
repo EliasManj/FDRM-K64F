@@ -64,26 +64,27 @@ int main(void)
 	user_main();
 
 	/*** Don't write any code pass this line, or it will be deleted during code generation. ***/
-	/*** RTOS startup code. Macro PEX_RTOS_START is defined by the RTOS component. DON'T MODIFY THIS CODE!!! ***/
-#ifdef PEX_RTOS_START
-	PEX_RTOS_START(); /* Startup of the selected RTOS. Macro is defined by the RTOS component. */
-#endif
-	/*** End of RTOS startup code.  ***/
-	/*** Processor Expert end of main routine. DON'T MODIFY THIS CODE!!! ***/
-	for (;;) {
-	}
-	/*** Processor Expert end of main routine. DON'T WRITE CODE BELOW!!! ***/
+  /*** RTOS startup code. Macro PEX_RTOS_START is defined by the RTOS component. DON'T MODIFY THIS CODE!!! ***/
+  #ifdef PEX_RTOS_START
+    PEX_RTOS_START();                  /* Startup of the selected RTOS. Macro is defined by the RTOS component. */
+  #endif
+  /*** End of RTOS startup code.  ***/
+  /*** Processor Expert end of main routine. DON'T MODIFY THIS CODE!!! ***/
+  for(;;){}
+  /*** Processor Expert end of main routine. DON'T WRITE CODE BELOW!!! ***/
 } /*** End of main routine. DO NOT MODIFY THIS TEXT!!! ***/
 
 void user_main(void) {
-
+	int a,b,c,d;
+	a = configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY;
+	b = configMAX_SYSCALL_INTERRUPT_PRIORITY;
+	c = configKERNEL_INTERRUPT_PRIORITY;
+	d = configPRIO_BITS;
 	RGB_test();
 	setGPIO_PortC();
+	serial_ports_Init();
 	timers_Init();
-	//xTaskCreate(vTask1, "Task 1", 200, NULL, 1, NULL);
-	//xTaskCreate(vTask2, "Task 2", 200, NULL, 1, NULL);
 
-	//Push_Btn_SW2();
 }
 
 void LPTimer_Init(void) {
