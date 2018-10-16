@@ -75,9 +75,10 @@
       <PathName>C:\Users\Elias g\FDRM-K64F\PE_FreeRTOS\Generated_Code\timers.c</PathName>
       <PathName>C:\Users\Elias g\FDRM-K64F\PE_FreeRTOS\Project_Settings\Startup_Code\__arm_end.c</PathName>
       <PathName>C:\Users\Elias g\FDRM-K64F\PE_FreeRTOS\Project_Settings\Startup_Code\__arm_start.c</PathName>
-      <PathName>C:\Users\Elias g\FDRM-K64F\PE_FreeRTOS\Project_Settings\Startup_Code\kinetis_sysinit.c</PathName>
       <PathName>C:\Users\Elias g\FDRM-K64F\PE_FreeRTOS\Sources\Events.c</PathName>
+      <PathName>C:\Users\Elias g\FDRM-K64F\PE_FreeRTOS\Sources\PWM_timers.c</PathName>
       <PathName>C:\Users\Elias g\FDRM-K64F\PE_FreeRTOS\Sources\RGB.c</PathName>
+      <PathName>C:\Users\Elias g\FDRM-K64F\PE_FreeRTOS\Sources\SerialPorts.c</PathName>
       <PathName>C:\Users\Elias g\FDRM-K64F\PE_FreeRTOS\Sources\main.c</PathName>
       <PathName>C:\Users\Elias g\FDRM-K64F\PE_FreeRTOS\Sources\user_tasks.c</PathName>
       <PathName>C:\Freescale\CW MCU v10.7\MCU\ProcessorExpert\lib\Kinetis\pdd2\MK64FN1M0LQ12\system\CPU_Init.c</PathName>
@@ -121,9 +122,10 @@
       <PathName>C:\Users\Elias g\FDRM-K64F\PE_FreeRTOS\Generated_Code\stream_buffer.h</PathName>
       <PathName>C:\Users\Elias g\FDRM-K64F\PE_FreeRTOS\Generated_Code\task.h</PathName>
       <PathName>C:\Users\Elias g\FDRM-K64F\PE_FreeRTOS\Generated_Code\timers.h</PathName>
+      <PathName>C:\Users\Elias g\FDRM-K64F\PE_FreeRTOS\Project_Headers\PWM_timers.h</PathName>
       <PathName>C:\Users\Elias g\FDRM-K64F\PE_FreeRTOS\Project_Headers\RGB.h</PathName>
+      <PathName>C:\Users\Elias g\FDRM-K64F\PE_FreeRTOS\Project_Headers\SerialPorts.h</PathName>
       <PathName>C:\Users\Elias g\FDRM-K64F\PE_FreeRTOS\Project_Headers\user_tasks.h</PathName>
-      <PathName>C:\Users\Elias g\FDRM-K64F\PE_FreeRTOS\Project_Settings\Startup_Code\kinetis_sysinit.h</PathName>
       <PathName>C:\Users\Elias g\FDRM-K64F\PE_FreeRTOS\Project_Settings\Startup_Code\runtime_configuration.h</PathName>
       <PathName>C:\Users\Elias g\FDRM-K64F\PE_FreeRTOS\Sources\Events.h</PathName>
       <PathName>C:\Freescale\CW MCU v10.7\MCU\ProcessorExpert\lib\Kinetis\iofiles\MK64F12.h</PathName>

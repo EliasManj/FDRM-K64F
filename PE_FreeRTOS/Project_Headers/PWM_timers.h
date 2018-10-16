@@ -27,9 +27,6 @@
 void vTimerCallback0(TimerHandle_t xTimer);
 void vTimerCallback1(TimerHandle_t xTimer);
 void timers_Init(void);
-uint32_t duty_cycle0;
-uint32_t duty_cycle1;
-uint32_t duty_cycle2;
-uint32_t duty_cycle3;
+void setGPIO_PortC(void);
 
 #endif /* PWM_TIMERS_H_ */

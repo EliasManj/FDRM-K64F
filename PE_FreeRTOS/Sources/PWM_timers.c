@@ -36,6 +36,7 @@ void vTimerCallback0(TimerHandle_t xTimer) {
 	if (ulCount >= 100) {
 		ulCount = 0;
 	}
+	/*
 	//PWM0 -> PTC5
 	if (ulCount <= duty_cycle0) {
 		RGB(1,0,0);
@@ -44,6 +45,7 @@ void vTimerCallback0(TimerHandle_t xTimer) {
 		RGB(0,0,0);
 		GPIOC_PDOR ^= (-(0) ^ GPIOC_PDOR ) & (1 << 5); //Put PTC5 as LOW
 	}
+	*/
 	//PWM1 -> PTC0
 	if (ulCount <= duty_cycle1) {
 		GPIOC_PDOR ^= (-(1) ^ GPIOC_PDOR ) & (1 << 0); //Put PTC0 as HIGH

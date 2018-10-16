@@ -101,7 +101,9 @@ Sources/main.o: ../Sources/main.c \
  C:/Users/Elias\ g/FDRM-K64F/PE_FreeRTOS/Generated_Code/Init_Config.h \
  C:/Users/Elias\ g/FDRM-K64F/PE_FreeRTOS/Project_Headers/RGB.h \
  C:/Users/Elias\ g/FDRM-K64F/PE_FreeRTOS/Project_Headers/user_tasks.h \
- C:/Users/Elias\ g/FDRM-K64F/PE_FreeRTOS/Project_Headers/RGB.h
+ C:/Users/Elias\ g/FDRM-K64F/PE_FreeRTOS/Project_Headers/RGB.h \
+ C:/Users/Elias\ g/FDRM-K64F/PE_FreeRTOS/Project_Headers/SerialPorts.h \
+ C:/Users/Elias\ g/FDRM-K64F/PE_FreeRTOS/Project_Headers/PWM_timers.h
 
 C:/Freescale/CW\ MCU\ v10.7/MCU/ARM_GCC_Support/ewl/EWL_C/include/lib_ewl.prefix:
 
@@ -308,3 +310,7 @@ C:/Users/Elias\ g/FDRM-K64F/PE_FreeRTOS/Project_Headers/RGB.h:
 C:/Users/Elias\ g/FDRM-K64F/PE_FreeRTOS/Project_Headers/user_tasks.h:
 
 C:/Users/Elias\ g/FDRM-K64F/PE_FreeRTOS/Project_Headers/RGB.h:
+
+C:/Users/Elias\ g/FDRM-K64F/PE_FreeRTOS/Project_Headers/SerialPorts.h:
+
+C:/Users/Elias\ g/FDRM-K64F/PE_FreeRTOS/Project_Headers/PWM_timers.h:

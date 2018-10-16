@@ -59,7 +59,6 @@ int main(void)
 	/*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
 	PE_low_level_init();
 	/*** End of Processor Expert internal initialization.                    ***/
-
 	/* Write your code here */
 	user_main();
 
@@ -84,16 +83,6 @@ void user_main(void) {
 	setGPIO_PortC();
 	serial_ports_Init();
 	timers_Init();
-
-}
-
-void LPTimer_Init(void) {
-	SIM_SCGC5 |= (1 << 0); //Activate the LPTMR in the system control gating register
-	LPTMR0_PSR = 0b0000101; //Bypass the preescaler and select the LPO(low power oscilator of 1Khz as the source of the timer)
-	LPTMR0_CMR = 500;			//compare of 500 clock cycles = .5 secs
-	LPTMR0_CSR = 0b01000001;	//Activate the timer and enable interrupts	
-	NVIC_ICPR(1) |= (1<<(58%32));		//Clean flag of LPTM in the interrupt vector
-	NVIC_ISER(1) |= (1<<(58%32)); //Activate the LPTM interrupt
 }
 
 void RGB_test(void) {

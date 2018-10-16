@@ -1,0 +1,13 @@
+Notas:
+-Todas las interrupciones del NVIC tienen una priority de 0
+-Las funciones FromISR solo pueden ser llamadas desde una interrupcion si esa interrupcion tiene una menor prioridad a configMAX_SYSCALL_INTERRUPT_PRIORITY
+-configMAX_SYSCALL_INTERRUPT_PRIORITY es de 16, por eso se tiene que cambiar manualmente la prioridad de las interrupciones del nvic
+-al principio del project tuve que incrementar la memoria del heap porque habia un overflow
+-tambien modifique unas propiedades de las interrupciones => no se si hayan afectado la funcionalidad freertos
+
+Config:
+configUSE_TIMERS = 1
+#define configTICK_RATE_HZ = 20000
+
+Baud rate = 2400
+#define configTIMER_TASK_PRIORITY                 (configMAX_PRIORITIES-3)
