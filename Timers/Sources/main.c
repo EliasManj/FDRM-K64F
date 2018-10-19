@@ -6,7 +6,7 @@
 #include "derivative.h" /* include peripheral declarations */
 #include "RGB.h"
 
-void pll_config(void);
+void pll_Init(void);
 void fll_config(void);
 void flex(void);
 void FTM_Init(void);
@@ -44,14 +44,11 @@ int main(void) {
 	RGB_Init();
 	//port_Init();
 	setGPIO_PortC();
-	fll_Init();
+	//fll_Init();
+	pll_Init();
 	return 0;
 }
 
-void pll_config(void) {
-	MCG_C6 |= (1 << 6);
-	MCG_C6 |= (1 << 3);
-}
 
 void fll_Init(void) {
 	//SIM_SCGC6|=(1<<27)+(1<<24);
@@ -62,7 +59,7 @@ void fll_Init(void) {
 	//SIM_SOPT2 |= (3 << 24);
 	PORTD_PCR1 =1<<8;
 	GPIOD_PDDR = 0x00000002;
-	MCG_S |= (1 << 4);
+	MCG_S |= (1 << 4)+1;
 	MCG_C6 &= ~(1 << 6);	//PLLS
 	//MCG_C4 |= (1 << 7);	//DMX32
 	//MCG_C4 |= (3 << 5);	//DRS
@@ -80,22 +77,4 @@ void fll_Init(void) {
 
 	PORTE_PCR29 =3<<8; //TPM0_CH2
 
-}
-
-void pll_Init(void){
-	MCG_C7 |= (1<<1);	//OSCSEL = 01 32Khz OSC1 = 42Khz
-	MCG_C5 |= (0<<0);	//PRDIV0 = 00 32Khz
-	
-}
-
-void setGPIO_PortC(void) {
-	SIM_SCGC5 |= (1 << 11);	//Activate clock of port C
-	PORTC_PCR5 = (1<<8);	//Set PTC5 as GPIO
-	PORTC_PCR0 = (1<<8);	//Set PTC0 as GPIO
-	PORTC_PCR8 = (1<<8);	//Set PTC8 as GPIO
-	PORTC_PCR3 = (1<<8);	//Set PTC3 as GPIO
-	GPIOC_PDDR |= (1 << 5);	//Set PTC5 as output
-	GPIOC_PDDR |= (1 << 0);	//Set PTC0 as output
-	GPIOC_PDDR |= (1 << 8);	//Set PTC8 as output
-	GPIOC_PDDR |= (1 << 3);	//Set PTC3 as output
 }
