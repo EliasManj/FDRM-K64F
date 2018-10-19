@@ -157,76 +157,140 @@ void vSerialTimerCallback0(TimerHandle_t xTimer) {
 
 //Timer callback for PWM1
 void vSerialTimerCallback1(TimerHandle_t xTimer) {
-	NVIC_ICER(1) |= 0xFFFFFFFF;			//Disable interrupt
-	uint32_t ulCount;
-	ulCount = (uint32_t) pvTimerGetTimerID(xTimer);
-	if (ulCount < 8) {
-		serial_recive >>= 1;
-		if (((GPIOC_PDIR & SERIAL1_MASK) >> SERIAL1_SHIFT)==1) {
-			serial_recive = serial_recive | 0x80;
-		}
-		//Timer con 100us
-		xTimerChangePeriod(xTimer, 2, 0);
-		ulCount++;
-		vTimerSetTimerID(xTimer, (void *) ulCount);
+	if (first_bit) {
+		NVIC_ICER(1) |= 0xFFFFFFFF;			//Disable interrupt
+		first_bit = 0;
+		xTimerChangePeriod(xTimer, 5, 0);
 	} else {
-		if (((GPIOC_PDIR & SERIAL1_MASK) >> SERIAL1_SHIFT)==1) {
-			xTimerStop(xTimer, 1);
-			if(serial_recive > 0 && serial_recive <= 100) {
-				duty_cycle1 = serial_recive;
+		uint32_t ulCount;
+		ulCount = (uint32_t) pvTimerGetTimerID(xTimer);
+		if (ulCount < 8) {
+			if(probe == 1) {
+				probe = 0;
+			} else {
+				probe = 1;
 			}
+			GPIOC_PDOR ^= (-(probe) ^ GPIOC_PDOR ) & (1 << 5); //Put PTC5 as HIGH
+			serial_recive>>=1;
+			if (((GPIOC_PDIR & SERIAL0_MASK) >> SERIAL0_SHIFT)==1) {
+				serial_recive = serial_recive | 0x80;
+			}
+			xTimerChangePeriod(xTimer, 7, 0);
+			if(ulCount == 7) {
+				ulCount = 7;
+			}
+			ulCount++;
+			vTimerSetTimerID(xTimer, (void *) ulCount);
+		} else if (ulCount == 8) {
+			if (((GPIOC_PDIR & SERIAL0_MASK) >> SERIAL0_SHIFT)==1) {
+				if(serial_recive > 0 && serial_recive <= 100) {
+					duty_cycle1 = serial_recive;
+				}
+			}
+			probe = 1;
+			ulCount++;
+			xTimerChangePeriod(xTimer, 7, 0);
+			vTimerSetTimerID(xTimer, (void *) ulCount);
+		} else {
+			NVIC_ICPR(1) |= (1<<(61%32));
+			NVIC_ISER(1) |= (1<<(61%32));
+			xTimerStop(xTimer, 0);
+			vTimerSetTimerID(xTimer, (void *) 0);
 		}
 	}
+
 }
 
 //Timer callback for PWM2
 void vSerialTimerCallback2(TimerHandle_t xTimer) {
-	NVIC_ICER(1) |= 0xFFFFFFFF;			//Disable interrupt
-	uint32_t ulCount;
-	ulCount = (uint32_t) pvTimerGetTimerID(xTimer);
-	if (ulCount < 8) {
-		serial_recive >>= 1;
-		if (((GPIOC_PDIR & SERIAL2_MASK) >> SERIAL2_SHIFT)==1) {
-			serial_recive = serial_recive | 0x80;
-		}
-		//Timer con 100us
-		xTimerChangePeriod(xTimer, 100, 0);
-		ulCount++;
-		vTimerSetTimerID(xTimer, (void *) ulCount);
+	if (first_bit) {
+		NVIC_ICER(1) |= 0xFFFFFFFF;			//Disable interrupt
+		first_bit = 0;
+		xTimerChangePeriod(xTimer, 5, 0);
 	} else {
-		if (((GPIOC_PDIR & SERIAL2_MASK) >> SERIAL2_SHIFT)==1) {
-			xTimerStop(xTimer, 1);
-			if(serial_recive > 0 && serial_recive <= 100) {
-				duty_cycle2 = serial_recive;
-				NVIC_ICPR(1) |= (1<<(61%32));
-				NVIC_ISER(1) |= (1<<(61%32));
+		uint32_t ulCount;
+		ulCount = (uint32_t) pvTimerGetTimerID(xTimer);
+		if (ulCount < 8) {
+			if(probe == 1) {
+				probe = 0;
+			} else {
+				probe = 1;
 			}
+			GPIOC_PDOR ^= (-(probe) ^ GPIOC_PDOR ) & (1 << 5); //Put PTC5 as HIGH
+			serial_recive>>=1;
+			if (((GPIOC_PDIR & SERIAL0_MASK) >> SERIAL0_SHIFT)==1) {
+				serial_recive = serial_recive | 0x80;
+			}
+			xTimerChangePeriod(xTimer, 7, 0);
+			if(ulCount == 7) {
+				ulCount = 7;
+			}
+			ulCount++;
+			vTimerSetTimerID(xTimer, (void *) ulCount);
+		} else if (ulCount == 8) {
+			if (((GPIOC_PDIR & SERIAL0_MASK) >> SERIAL0_SHIFT)==1) {
+				if(serial_recive > 0 && serial_recive <= 100) {
+					duty_cycle2 = serial_recive;
+				}
+			}
+			probe = 1;
+			ulCount++;
+			xTimerChangePeriod(xTimer, 7, 0);
+			vTimerSetTimerID(xTimer, (void *) ulCount);
+		} else {
+			NVIC_ICPR(1) |= (1<<(61%32));
+			NVIC_ISER(1) |= (1<<(61%32));
+			xTimerStop(xTimer, 0);
+			vTimerSetTimerID(xTimer, (void *) 0);
 		}
 	}
+
 }
 
 //Timer callback for PWM3
 void vSerialTimerCallback3(TimerHandle_t xTimer) {
-	NVIC_ICER(1) |= 0xFFFFFFFF;			//Disable interrupt
-	uint32_t ulCount;
-	ulCount = (uint32_t) pvTimerGetTimerID(xTimer);
-	if (ulCount < 8) {
-		serial_recive >>= 1;
-		if (((GPIOC_PDIR & SERIAL3_MASK) >> SERIAL3_SHIFT)==1) {
-			serial_recive = serial_recive | 0x80;
-		}
-		//Timer con 100us
-		xTimerChangePeriod(xTimer, 2, 0);
-		ulCount++;
-		vTimerSetTimerID(xTimer, (void *) ulCount);
+	if (first_bit) {
+		NVIC_ICER(1) |= 0xFFFFFFFF;			//Disable interrupt
+		first_bit = 0;
+		xTimerChangePeriod(xTimer, 5, 0);
 	} else {
-		if (((GPIOC_PDIR & SERIAL3_MASK) >> SERIAL3_SHIFT)==1) {
-			xTimerStop(xTimer, 1);
-			if(serial_recive > 0 && serial_recive <= 100) {
-				duty_cycle3 = serial_recive;
+		uint32_t ulCount;
+		ulCount = (uint32_t) pvTimerGetTimerID(xTimer);
+		if (ulCount < 8) {
+			if(probe == 1) {
+				probe = 0;
+			} else {
+				probe = 1;
 			}
+			GPIOC_PDOR ^= (-(probe) ^ GPIOC_PDOR ) & (1 << 5); //Put PTC5 as HIGH
+			serial_recive>>=1;
+			if (((GPIOC_PDIR & SERIAL0_MASK) >> SERIAL0_SHIFT)==1) {
+				serial_recive = serial_recive | 0x80;
+			}
+			xTimerChangePeriod(xTimer, 7, 0);
+			if(ulCount == 7) {
+				ulCount = 7;
+			}
+			ulCount++;
+			vTimerSetTimerID(xTimer, (void *) ulCount);
+		} else if (ulCount == 8) {
+			if (((GPIOC_PDIR & SERIAL0_MASK) >> SERIAL0_SHIFT)==1) {
+				if(serial_recive > 0 && serial_recive <= 100) {
+					duty_cycle3 = serial_recive;
+				}
+			}
+			probe = 1;
+			ulCount++;
+			xTimerChangePeriod(xTimer, 7, 0);
+			vTimerSetTimerID(xTimer, (void *) ulCount);
+		} else {
+			NVIC_ICPR(1) |= (1<<(61%32));
+			NVIC_ISER(1) |= (1<<(61%32));
+			xTimerStop(xTimer, 0);
+			vTimerSetTimerID(xTimer, (void *) 0);
 		}
 	}
+
 }
 
 void LPTimer_Init(void) {
