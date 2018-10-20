@@ -8,10 +8,12 @@ void setGPIO_PortC(void) {
 	PORTC_PCR0 = (1<<8);	//Set PTC0 as GPIO
 	PORTC_PCR8 = (1<<8);	//Set PTC8 as GPIO
 	PORTC_PCR3 = (1<<8);	//Set PTC3 as GPIO
+	PORTC_PCR17 = (1<<8);	//Set PTC17 as GPIO
 	GPIOC_PDDR |= (1 << 5);	//Set PTC5 as output
 	GPIOC_PDDR |= (1 << 0);	//Set PTC0 as output
 	GPIOC_PDDR |= (1 << 8);	//Set PTC8 as output
 	GPIOC_PDDR |= (1 << 3);	//Set PTC3 as output
+	GPIOC_PDDR |= (1 << 17);//Set PTC17 as output
 }
 
 void timers_Init(void) {
@@ -36,8 +38,9 @@ void vTimerCallback0(TimerHandle_t xTimer) {
 	if (ulCount >= 100) {
 		ulCount = 0;
 	}
-	/*
+	
 	//PWM0 -> PTC5
+	
 	if (ulCount <= duty_cycle0) {
 		RGB(1,0,0);
 		GPIOC_PDOR ^= (-(1) ^ GPIOC_PDOR ) & (1 << 5); //Put PTC5 as HIGH
@@ -45,7 +48,7 @@ void vTimerCallback0(TimerHandle_t xTimer) {
 		RGB(0,0,0);
 		GPIOC_PDOR ^= (-(0) ^ GPIOC_PDOR ) & (1 << 5); //Put PTC5 as LOW
 	}
-	*/
+	
 	//PWM1 -> PTC0
 	if (ulCount <= duty_cycle1) {
 		GPIOC_PDOR ^= (-(1) ^ GPIOC_PDOR ) & (1 << 0); //Put PTC0 as HIGH

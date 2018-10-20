@@ -26,9 +26,15 @@ void serial_ports_Init(void) {
 	Push_Btn_SW2();
 	first_bit = 1;
 	probe = 1;
-	GPIOC_PDOR ^= (-(probe) ^ GPIOC_PDOR ) & (1 << 5); //Put PTC5 as HIGH
-	xTimerSerial = xTimerCreate("Serial", 100, 0, (void *) 0,
+	GPIOC_PDOR ^= (-(probe) ^ GPIOC_PDOR ) & (1 << 17); //Put PTC17 as HIGH
+	xTimerSerial0 = xTimerCreate("Serial0", 100, 0, (void *) 0,
 			vSerialTimerCallback0);
+	xTimerSerial1 = xTimerCreate("Serial1", 100, 0, (void *) 0,
+			vSerialTimerCallback1);
+	xTimerSerial2 = xTimerCreate("Serial2", 100, 0, (void *) 0,
+			vSerialTimerCallback2);
+	xTimerSerial3 = xTimerCreate("Serial3", 100, 0, (void *) 0,
+			vSerialTimerCallback3);
 }
 
 void serial0_Init(void) {
@@ -85,26 +91,39 @@ void ivINT_PORTC(void) {
 	if ((PORTC_PCR6 &0x01000000) == 0x01000000) {
 		RGB(0,0,1);
 		PORTC_PCR6 &= ~(0<<24);
-		if (xTimerSerial != NULL) {
-			if( xTimerStartFromISR( xTimerSerial,&xHigherPriorityTaskWoken ) != pdPASS ) {
+		if (xTimerSerial0 != NULL) {
+			if( xTimerStartFromISR( xTimerSerial0,&xHigherPriorityTaskWoken ) != pdPASS ) {
 				RGB(1,0,1);
 			}
 		}
+		//poRTS
 	} else if ((PORTC_PCR2&0x01000000) == 0x01000000) {
 		RGB(0,1,0);
 		PORTC_PCR2 &= ~(0<<24);
+		if (xTimerSerial3 != NULL) {
+			first_bit = 1;
+			xTimerStartFromISR( xTimerSerial3,&xHigherPriorityTaskWoken );
+		}
 	} else if ((PORTC_PCR1&0x01000000) == 0x01000000) {
 		RGB(0,1,1);
 		PORTC_PCR1 &= ~(0<<24);
+		if (xTimerSerial2 != NULL) {
+			first_bit = 1;
+			xTimerStartFromISR( xTimerSerial2,&xHigherPriorityTaskWoken );
+		}
 	} else if ((PORTC_PCR9&0x01000000) == 0x01000000) {
 		RGB(1,0,0);
 		PORTC_PCR9 &= ~(0<<24);
+		if (xTimerSerial1 != NULL) {
+			first_bit = 1;
+			xTimerStartFromISR( xTimerSerial1,&xHigherPriorityTaskWoken );
+		}
 	} else if ((PORTC_PCR7&0x01000000) == 0x01000000) {
 		RGB(1,0,1);
 		PORTC_PCR7 &= ~(0<<24);
-		if (xTimerSerial != NULL) {
+		if (xTimerSerial0 != NULL) {
 			first_bit = 1;
-			xTimerStartFromISR( xTimerSerial,&xHigherPriorityTaskWoken );
+			xTimerStartFromISR( xTimerSerial0,&xHigherPriorityTaskWoken );
 		}
 	}
 }
@@ -124,7 +143,7 @@ void vSerialTimerCallback0(TimerHandle_t xTimer) {
 			} else {
 				probe = 1;
 			}
-			GPIOC_PDOR ^= (-(probe) ^ GPIOC_PDOR ) & (1 << 5); //Put PTC5 as HIGH
+			GPIOC_PDOR ^= (-(probe) ^ GPIOC_PDOR ) & (1 << 17); //Put PTC17 as HIGH
 			serial_recive>>=1;
 			if (((GPIOC_PDIR & SERIAL0_MASK) >> SERIAL0_SHIFT)==1) {
 				serial_recive = serial_recive | 0x80;
@@ -138,7 +157,7 @@ void vSerialTimerCallback0(TimerHandle_t xTimer) {
 		} else if (ulCount == 8) {
 			if (((GPIOC_PDIR & SERIAL0_MASK) >> SERIAL0_SHIFT)==1) {
 				if(serial_recive > 0 && serial_recive <= 100) {
-					duty_cycle1 = serial_recive;
+					duty_cycle0 = serial_recive;
 				}
 			}
 			probe = 1;
@@ -170,9 +189,9 @@ void vSerialTimerCallback1(TimerHandle_t xTimer) {
 			} else {
 				probe = 1;
 			}
-			GPIOC_PDOR ^= (-(probe) ^ GPIOC_PDOR ) & (1 << 5); //Put PTC5 as HIGH
+			GPIOC_PDOR ^= (-(probe) ^ GPIOC_PDOR ) & (1 << 17); //Put PTC17 as HIGH
 			serial_recive>>=1;
-			if (((GPIOC_PDIR & SERIAL0_MASK) >> SERIAL0_SHIFT)==1) {
+			if (((GPIOC_PDIR & SERIAL1_MASK) >> SERIAL1_SHIFT)==1) {
 				serial_recive = serial_recive | 0x80;
 			}
 			xTimerChangePeriod(xTimer, 7, 0);
@@ -182,7 +201,7 @@ void vSerialTimerCallback1(TimerHandle_t xTimer) {
 			ulCount++;
 			vTimerSetTimerID(xTimer, (void *) ulCount);
 		} else if (ulCount == 8) {
-			if (((GPIOC_PDIR & SERIAL0_MASK) >> SERIAL0_SHIFT)==1) {
+			if (((GPIOC_PDIR & SERIAL1_MASK) >> SERIAL1_SHIFT)==1) {
 				if(serial_recive > 0 && serial_recive <= 100) {
 					duty_cycle1 = serial_recive;
 				}
@@ -216,9 +235,9 @@ void vSerialTimerCallback2(TimerHandle_t xTimer) {
 			} else {
 				probe = 1;
 			}
-			GPIOC_PDOR ^= (-(probe) ^ GPIOC_PDOR ) & (1 << 5); //Put PTC5 as HIGH
+			GPIOC_PDOR ^= (-(probe) ^ GPIOC_PDOR ) & (1 << 17); //Put PTC17 as HIGH
 			serial_recive>>=1;
-			if (((GPIOC_PDIR & SERIAL0_MASK) >> SERIAL0_SHIFT)==1) {
+			if (((GPIOC_PDIR & SERIAL2_MASK) >> SERIAL2_SHIFT)==1) {
 				serial_recive = serial_recive | 0x80;
 			}
 			xTimerChangePeriod(xTimer, 7, 0);
@@ -228,7 +247,7 @@ void vSerialTimerCallback2(TimerHandle_t xTimer) {
 			ulCount++;
 			vTimerSetTimerID(xTimer, (void *) ulCount);
 		} else if (ulCount == 8) {
-			if (((GPIOC_PDIR & SERIAL0_MASK) >> SERIAL0_SHIFT)==1) {
+			if (((GPIOC_PDIR & SERIAL2_MASK) >> SERIAL2_SHIFT)==1) {
 				if(serial_recive > 0 && serial_recive <= 100) {
 					duty_cycle2 = serial_recive;
 				}
@@ -262,9 +281,9 @@ void vSerialTimerCallback3(TimerHandle_t xTimer) {
 			} else {
 				probe = 1;
 			}
-			GPIOC_PDOR ^= (-(probe) ^ GPIOC_PDOR ) & (1 << 5); //Put PTC5 as HIGH
+			GPIOC_PDOR ^= (-(probe) ^ GPIOC_PDOR ) & (1 << 17); //Put PTC17 as HIGH
 			serial_recive>>=1;
-			if (((GPIOC_PDIR & SERIAL0_MASK) >> SERIAL0_SHIFT)==1) {
+			if (((GPIOC_PDIR & SERIAL3_MASK) >> SERIAL3_SHIFT)==1) {
 				serial_recive = serial_recive | 0x80;
 			}
 			xTimerChangePeriod(xTimer, 7, 0);
@@ -274,7 +293,7 @@ void vSerialTimerCallback3(TimerHandle_t xTimer) {
 			ulCount++;
 			vTimerSetTimerID(xTimer, (void *) ulCount);
 		} else if (ulCount == 8) {
-			if (((GPIOC_PDIR & SERIAL0_MASK) >> SERIAL0_SHIFT)==1) {
+			if (((GPIOC_PDIR & SERIAL3_MASK) >> SERIAL3_SHIFT)==1) {
 				if(serial_recive > 0 && serial_recive <= 100) {
 					duty_cycle3 = serial_recive;
 				}
