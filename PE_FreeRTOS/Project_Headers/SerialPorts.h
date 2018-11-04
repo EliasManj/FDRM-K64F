@@ -26,8 +26,8 @@
 
 #define SERIAL0_MASK 	 	0x00000080
 #define SERIAL1_MASK 	 	0x00000200
-#define SERIAL2_MASK 	 	0x00000001
-#define SERIAL3_MASK 	 	0x00000002
+#define SERIAL2_MASK 	 	0x00000002
+#define SERIAL3_MASK 	 	0x00000004
 #define SERIAL_BTN_MASK  	0x00000040
 
 #define SERIAL0_SHIFT    	7
@@ -53,9 +53,15 @@ void serial_ports_Init(void);
 void LPTimer_Init(void);
 
 //Variables
-TimerHandle_t xTimerSerial;
+TimerHandle_t xTimerSerial0;
+TimerHandle_t xTimerSerial1;
+TimerHandle_t xTimerSerial2;
+TimerHandle_t xTimerSerial3;
 //Timer callback
 void vSerialTimerCallback0(TimerHandle_t xTimer);
+void vSerialTimerCallback1(TimerHandle_t xTimer);
+void vSerialTimerCallback2(TimerHandle_t xTimer);
+void vSerialTimerCallback3(TimerHandle_t xTimer);
 
 //Interrupt ISR
 void ivINT_LPTimer(void);

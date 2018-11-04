@@ -54,7 +54,6 @@
 #include "MCUC1.h"
 #include "UTIL1.h"
 #include "Events.h"
-#include "SerialPorts.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -140,7 +139,7 @@ extern "C" {
 #define VECTOR_74         (tIsrFunc)&ivINT_LPTimer		        /* 0x4A -    ivINT_LPTimer                  unused by PE */
 #define VECTOR_75         (tIsrFunc)&UnhandledInterrupt         /* 0x4B -    ivINT_PORTA                    unused by PE */
 #define VECTOR_76         (tIsrFunc)&UnhandledInterrupt         /* 0x4C -    ivINT_PORTB                    unused by PE */
-#define VECTOR_77         (tIsrFunc)&ivINT_PORTC		        /* 0x4D -    ivINT_PORTC                    unused by PE */
+#define VECTOR_77         (tIsrFunc)&ivINT_PORTC        		/* 0x4D -    ivINT_PORTC                    unused by PE */
 #define VECTOR_78         (tIsrFunc)&UnhandledInterrupt         /* 0x4E -    ivINT_PORTD                    unused by PE */
 #define VECTOR_79         (tIsrFunc)&UnhandledInterrupt         /* 0x4F -    ivINT_PORTE                    unused by PE */
 #define VECTOR_80         (tIsrFunc)&UnhandledInterrupt         /* 0x50 -    ivINT_SWI                      unused by PE */

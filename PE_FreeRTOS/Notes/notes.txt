@@ -7,7 +7,7 @@ Notas:
 
 Config:
 configUSE_TIMERS = 1
-#define configTICK_RATE_HZ = 20000
+#define configTICK_RATE_HZ = 10000
 
 Baud rate = 2400
 #define configTIMER_TASK_PRIORITY                 (configMAX_PRIORITIES-3)

@@ -3,7 +3,7 @@
 #include "RGB.h"
 /*
  * SERIAL0 OUT PTC5
- * SERIAL0 RX  PTC7
+ * SERIAL0 RX  PTC7 	
  * 
  * SERIAL1 OUT PTC0
  * SERIAL1 RX  PTC9
@@ -156,7 +156,7 @@ void vSerialTimerCallback0(TimerHandle_t xTimer) {
 			vTimerSetTimerID(xTimer, (void *) ulCount);
 		} else if (ulCount == 8) {
 			if (((GPIOC_PDIR & SERIAL0_MASK) >> SERIAL0_SHIFT)==1) {
-				if(serial_recive > 0 && serial_recive <= 100) {
+				if(serial_recive > 0 && serial_recive < 100) {
 					duty_cycle0 = serial_recive;
 				}
 			}
@@ -202,7 +202,7 @@ void vSerialTimerCallback1(TimerHandle_t xTimer) {
 			vTimerSetTimerID(xTimer, (void *) ulCount);
 		} else if (ulCount == 8) {
 			if (((GPIOC_PDIR & SERIAL1_MASK) >> SERIAL1_SHIFT)==1) {
-				if(serial_recive > 0 && serial_recive <= 100) {
+				if(serial_recive > 0 && serial_recive < 100) {
 					duty_cycle1 = serial_recive;
 				}
 			}
@@ -248,7 +248,7 @@ void vSerialTimerCallback2(TimerHandle_t xTimer) {
 			vTimerSetTimerID(xTimer, (void *) ulCount);
 		} else if (ulCount == 8) {
 			if (((GPIOC_PDIR & SERIAL2_MASK) >> SERIAL2_SHIFT)==1) {
-				if(serial_recive > 0 && serial_recive <= 100) {
+				if(serial_recive > 0 && serial_recive < 100) {
 					duty_cycle2 = serial_recive;
 				}
 			}
@@ -294,7 +294,7 @@ void vSerialTimerCallback3(TimerHandle_t xTimer) {
 			vTimerSetTimerID(xTimer, (void *) ulCount);
 		} else if (ulCount == 8) {
 			if (((GPIOC_PDIR & SERIAL3_MASK) >> SERIAL3_SHIFT)==1) {
-				if(serial_recive > 0 && serial_recive <= 100) {
+				if(serial_recive > 0 && serial_recive < 100) {
 					duty_cycle3 = serial_recive;
 				}
 			}
