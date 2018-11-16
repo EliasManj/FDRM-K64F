@@ -10,9 +10,7 @@
 #define BACKSPACE 	0x08
 
 #define BUFLEN 20
-int rx_status;
-char command[BUFLEN];
-char val;
+uint8_t uart_recive;
 
 struct Buffer {
 	volatile uint8_t head;
@@ -22,10 +20,10 @@ struct Buffer {
 };
 
 typedef struct Buffer bufferType;
-bufferType Buffer_rx = { 0, 0, 10, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
+bufferType Buffer_rx = { 0, 0, BUFLEN, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
 bufferType *rx_bf;
 
-void uart_init(void);
+void uart_init_usb(void);
 void buffer_push(bufferType *bf, char data);
 char buffer_pop(bufferType *bf);
 uint8_t buffer_inc(uint8_t pointer, uint8_t size);
@@ -35,13 +33,13 @@ uint8_t buffer_isfull(bufferType *bf);
 
 int main(void) {
 	rx_bf = &Buffer_rx;
-	uart_init();
+	uart_init_usb();
 	while (1) {
 	}
 	return 0;
 }
 
-void uart_init(void) {
+void uart_init_usb(void) {
 	SIM_SCGC4 |= (1 << 10);	//CLK UART0
 	SIM_SCGC5 |= SIM_SCGC5_PORTB_MASK; /*Enable the PORTB clock*/
 	PORTB_PCR16 |= PORT_PCR_MUX(3);
@@ -64,13 +62,10 @@ void UART0_Status_IRQHandler(void) {
 	}
 	//READ
 	if ((UART0_S1 & 0x20) >> 5 && !(buffer_isfull(rx_bf))) {
-		val = UART0_D;
-		buffer_push(rx_bf, val);
-		if (val != CARR_RETURN) {
-
-		} else {
+		uart_recive = UART0_D;
+		buffer_push(rx_bf, uart_recive);
+		if (uart_recive == CARR_RETURN) {
 			buffer_push(rx_bf, NEW_LINE);
-			rx_status = 1;
 		}
 		UART0_C2 |= 0x80;	//Turn on TX interrupt
 	}
