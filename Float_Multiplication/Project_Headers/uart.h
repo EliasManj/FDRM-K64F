@@ -3,17 +3,9 @@
 
 #include "derivative.h"
 
-#define BUFLEN 100
-
-//Define Buffer
-struct Buffer {
-	volatile uint8_t head;
-	volatile uint8_t tail;
-	volatile uint8_t size;
-	volatile char data[BUFLEN];
-};
-
-typedef struct Buffer bufferType;
+#define NEW_LINE 	0x0A	// \r
+#define CARR_RETURN 0x0D	// \n
+#define BACKSPACE 	0x08
 
 void uart_init(void);
 

@@ -73,7 +73,7 @@ void send_f32_to_uart(uint32_t val) {
 
 int32_t mult_f32(int32_t x0, int32_t x1) {
 	//Result
-	uint32_t exp;
+	int32_t exp;
 	uint32_t sign;
 	uint64_t mant0_temp;
 	uint64_t mant1_temp;
@@ -84,10 +84,8 @@ int32_t mult_f32(int32_t x0, int32_t x1) {
 	f32_t y1;
 	f32_t result;
 	uint64_t offset;
-
 	y0.val = x0;
 	y1.val = x1;
-
 	//Calculate exponent
 	exp = y0.fields.exp + y1.fields.exp - 127 - 127;
 	//Calculate sign
@@ -112,7 +110,14 @@ int32_t mult_f32(int32_t x0, int32_t x1) {
 			}
 		}
 	}
-	result.fields.exp = exp + 127;
+	if((exp) > 127){
+		return 0xEFFFFFFF;
+	}
+	if ((exp) < -126){
+		return 0x00000000;
+	}
+	exp = exp + 127;
+	result.fields.exp = exp;
 	result.fields.sign = sign;
 	result.fields.mantissa = mant_mult_result;
 	return result.val;
